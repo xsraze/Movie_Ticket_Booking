@@ -1,4 +1,4 @@
-package com.example.movie_ticket_booking;
+package com.example.movie_ticket_booking.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

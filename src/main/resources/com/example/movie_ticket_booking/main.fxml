@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/19">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Label" />
-         </children>
+         <Label text="Label"/>
       </HBox>
    </top>
    <bottom>
@@ -24,9 +23,7 @@
    </center>
    <left>
       <VBox prefHeight="200.0" prefWidth="153.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" text="Button" />
-         </children>
+         <Button mnemonicParsing="false" text="Button"/>
       </VBox>
    </left>
 </BorderPane>

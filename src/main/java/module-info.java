@@ -4,5 +4,8 @@ module com.example.movie_ticket_booking {
 
 
     opens com.example.movie_ticket_booking to javafx.fxml;
-    exports com.example.movie_ticket_booking;
+    exports com.example.movie_ticket_booking.Controller;
+    opens com.example.movie_ticket_booking.Controller to javafx.fxml;
+    exports com.example.movie_ticket_booking.Model;
+    opens com.example.movie_ticket_booking.Model to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.example.movie_ticket_booking;
+package com.example.movie_ticket_booking.Model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
