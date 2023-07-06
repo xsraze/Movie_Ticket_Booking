@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.AdminController">
+    <top>
+        <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="logo" fitHeight="65.0" fitWidth="78.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492189745217576/image-removebg-preview_1.png" />
+                    </image>
+                </ImageView>
+                <TextField fx:id="searchbar" layoutX="362.0" layoutY="18.0" prefHeight="36.0" prefWidth="283.0" promptText="Search" />
+                <Button layoutX="659.0" layoutY="18.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="36.0" text="🔎" />
+                <Button fx:id="login_btn" layoutX="877.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Log in">
+                    <font>
+                        <Font size="18.0" />
+                    </font></Button>
+                <Button fx:id="signin_btn" layoutX="776.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign in">
+                    <font>
+                        <Font size="18.0" />
+                    </font></Button>
+                <ImageView fx:id="logo1" fitHeight="65.0" fitWidth="78.0" layoutX="1000.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492999405289554/image-removebg-preview.png" />
+                    </image></ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+    <bottom>
+        <AnchorPane prefHeight="90.0" prefWidth="1080.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+            <children>
+                <Polygon layoutX="58.0" layoutY="54.0" points="-444.66668701171875, -56.77779006958008, 103.33331298828125, 39.999977111816406, 169.99998474121094, -56.77779006958008" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon layoutX="-125.0" layoutY="3.0" points="125.00000762939453, 91.66666412353516, 286.3333435058594, 91.6666488647461, 0.0, -60.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+                <Label contentDisplay="TOP" layoutX="22.0" layoutY="21.0" text="Quick Book" textFill="WHITE">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <Label layoutX="263.0" layoutY="12.0" text="Venue" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="819.0" layoutY="12.0" text="Seat" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="630.0" layoutY="12.0" text="Date" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="439.0" layoutY="13.0" text="Film" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="search_qb" layoutX="990.0" layoutY="35.0" mnemonicParsing="false" text="Search" />
+                <ComboBox fx:id="combo_venue" layoutX="259.0" layoutY="46.0" prefWidth="150.0" promptText="Choose a cinema" />
+                <ComboBox fx:id="combo_movie" layoutX="436.0" layoutY="46.0" prefWidth="150.0" promptText="Choose a movie" />
+                <ComboBox fx:id="combo_date" layoutX="625.0" layoutY="47.0" prefWidth="150.0" promptText="Choose a date and an hour" />
+                <ComboBox fx:id="combo_seat" layoutX="817.0" layoutY="48.0" prefWidth="150.0" promptText="Choose a seat" />
+            </children></AnchorPane>
+    </bottom>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+            <Tab text="Update Movie">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Discount Offers">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Update Profile">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Analyze the sales">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Analyze Movie">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Admin View">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
