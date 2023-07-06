@@ -3,14 +3,20 @@ package com.example.movie_ticket_booking;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,8 +59,6 @@ public class HomeController {
     private GridPane MovieContainer;
 
     public void Initialisation(){
-
-
         int col = 0;
         int line = 1;
 
@@ -69,7 +73,7 @@ public class HomeController {
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
-                VBox bookBox = fxmlLoader.load();
+                VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
                 mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
 
@@ -79,8 +83,125 @@ public class HomeController {
                     ++line;
                 }
 
-                MovieContainer.add(bookBox, col++, line);
-                GridPane.setMargin(bookBox, new Insets(10));
+                MovieContainer.add(movieBox, col++, line);
+                GridPane.setMargin(movieBox, new Insets(10));
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void Home(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+        HomeController hc = fxmlLoader.getController();
+        hc.Initialisation();
+        Scene scene = new Scene(root);
+        lstage.setScene(scene);
+        lstage.show();
+    }
+
+    @FXML
+    void Name() {
+        int col = 0;
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Name ASC");
+            System.out.println("Hello");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
+                VBox movieBox = fxmlLoader.load();
+                MovieController mc = fxmlLoader.getController();
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+
+                if(col == 3)
+                {
+                    col =0;
+                    ++line;
+                }
+
+                MovieContainer.add(movieBox, col++, line);
+                GridPane.setMargin(movieBox, new Insets(10));
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void Year() {
+        int col = 0;
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Year ASC");
+            System.out.println("Hello");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
+                VBox movieBox = fxmlLoader.load();
+                MovieController mc = fxmlLoader.getController();
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+
+                if(col == 3)
+                {
+                    col =0;
+                    ++line;
+                }
+
+                MovieContainer.add(movieBox, col++, line);
+                GridPane.setMargin(movieBox, new Insets(10));
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void Genre(MouseEvent event) {
+        int col = 0;
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Genre ASC");
+            System.out.println("Hello");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
+                VBox movieBox = fxmlLoader.load();
+                MovieController mc = fxmlLoader.getController();
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+
+                if(col == 3)
+                {
+                    col =0;
+                    ++line;
+                }
+
+                MovieContainer.add(movieBox, col++, line);
+                GridPane.setMargin(movieBox, new Insets(10));
             }
             con.close();
         } catch (Exception e1) {
