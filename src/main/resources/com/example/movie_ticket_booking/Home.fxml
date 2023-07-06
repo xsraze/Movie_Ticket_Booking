@@ -4,32 +4,36 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="1081.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.HomeController">
    <top>
-      <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="logo" fitHeight="65.0" fitWidth="78.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="logo" fitHeight="65.0" fitWidth="78.0" layoutX="30.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492189745217576/image-removebg-preview_1.png" />
                </image>
             </ImageView>
             <TextField fx:id="searchbar" layoutX="362.0" layoutY="18.0" prefHeight="36.0" prefWidth="283.0" promptText="Search" />
             <Button layoutX="659.0" layoutY="18.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="36.0" text="🔎" />
-            <Button fx:id="login_btn" layoutX="877.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Log in">
+            <Button fx:id="login_btn" layoutX="887.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Log in" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font></Button>
-            <Button fx:id="signin_btn" layoutX="776.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign in">
+            <Button fx:id="signin_btn" layoutX="789.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign in" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font></Button>
             <ImageView fx:id="logo1" fitHeight="65.0" fitWidth="78.0" layoutX="1000.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -39,11 +43,11 @@
       </AnchorPane>
    </top>
    <bottom>
-      <AnchorPane prefHeight="90.0" prefWidth="1080.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="90.0" prefWidth="1080.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Polygon layoutX="58.0" layoutY="54.0" points="-444.66668701171875, -56.77779006958008, 103.33331298828125, 39.999977111816406, 169.99998474121094, -56.77779006958008" smooth="false" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon layoutX="-125.0" layoutY="3.0" points="125.00000762939453, 91.66666412353516, 286.3333435058594, 91.6666488647461, 0.0, -60.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
-            <Label contentDisplay="TOP" layoutX="22.0" layoutY="21.0" text="Quick Book" textFill="WHITE">
+            <Polygon layoutX="176.0" layoutY="45.0" points="-167.88893127441406, -38.44443893432617, -167.88894653320312, 43.999961853027344, -12.333389282226562, -38.44443893432617" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+            <Polygon layoutX="168.0" layoutY="49.0" points="-159.88893127441406, 39.999961853027344, 28.555526733398438, 39.999961853027344, -4.3333892822265625, -42.44443893432617" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+            <Label contentDisplay="TOP" layoutX="22.0" layoutY="21.0" text="Quick Book" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="28.0" />
                </font>
@@ -75,11 +79,40 @@
             <ComboBox fx:id="combo_seat" layoutX="817.0" layoutY="48.0" prefWidth="150.0" promptText="Choose a seat" />
          </children></AnchorPane>
    </bottom>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="52.0" layoutY="14.0" text="Browse" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="47.0" layoutY="67.0" prefHeight="25.0" prefWidth="106.0" text="📅   Year" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="48.0" layoutY="104.0" prefHeight="25.0" prefWidth="106.0" text="📽  Name" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Separator layoutY="152.0" prefWidth="200.0" />
+         </children></AnchorPane>
+   </left>
    <center>
-      <ScrollPane fx:id="scroll" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fx:id="scroll" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #232323;" VBox.vgrow="ALWAYS">
+               <content>
+                  <GridPane fx:id="MovieContainer" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #232323;">
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
    </center>
 </BorderPane>
