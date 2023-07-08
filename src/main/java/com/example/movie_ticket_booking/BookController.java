@@ -120,31 +120,4 @@ public class BookController {
     @FXML
     private ComboBox<?> venue_cb;
 
-    @FXML
-    void setPlus(ActionEvent event) {
-        place_nb.setText(""+ (Integer.parseInt(place_nb.getText()) + 1));
-    }
-
-    @FXML
-    void setMinus(ActionEvent event) {
-        if(Integer.parseInt(place_nb.getText())>0)
-            place_nb.setText(""+ (Integer.parseInt(place_nb.getText()) - 1));
-    }
-
-    /*void setPlace_nb(ActionEvent event){
-        int value=0;
-        if(plus_btn.)
-        {
-            value++;
-            place_nb.setText(String.valueOf(value));
-        }));
-        if(plus_btn.setOnAction(event1 -> {
-
-        });
-        if(min_btn.setOnAction(event1 ->
-        {
-            value++;
-            place_nb.setText(String.valueOf(value));
-        });
-    }*/
 }
