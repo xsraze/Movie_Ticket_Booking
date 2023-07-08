@@ -35,7 +35,6 @@ public class LoginController {
                 {
                     int account = Integer.parseInt(rs.getString("ID_user"));
 
-
                     FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
                     Parent root = fxmlLoader.load();
                     Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
@@ -44,7 +43,6 @@ public class LoginController {
                     Scene scene = new Scene(root);
                     lstage.setScene(scene);
                     lstage.show();
-
                 }
             }
             con.close();

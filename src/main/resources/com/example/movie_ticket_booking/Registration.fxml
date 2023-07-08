@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.movie_ticket_booking.RegisterController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.RegistrationController">
+   <children>
+      <Label layoutX="322.0" layoutY="14.0" text="Registration" textFill="WHITE">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="272.0" layoutY="123.0" text="Name" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="272.0" layoutY="160.0" text="Last Name" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="197.0" text="Email" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="233.0" text="Phone" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="270.0" text="Username" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="307.0" text="Password" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="344.0" text="Type" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtName" layoutX="393.0" layoutY="124.0" promptText="Name" />
+      <TextField fx:id="txtLastName" layoutX="392.0" layoutY="163.0" promptText="Last Name" />
+      <TextField fx:id="txtEmail" layoutX="391.0" layoutY="199.0" promptText="Email" />
+      <TextField fx:id="txtPhone" layoutX="391.0" layoutY="235.0" promptText="Phone" />
+      <TextField fx:id="txtPassword" layoutX="391.0" layoutY="308.0" promptText="Password" />
+      <TextField fx:id="txtUsername" layoutX="391.0" layoutY="272.0" promptText="Username" />
+      <RadioButton fx:id="radAdmin" layoutX="394.0" layoutY="350.0" mnemonicParsing="false" text="Admin" textFill="WHITE">
+         <toggleGroup>
+            <ToggleGroup fx:id="type" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="RadCust" layoutX="466.0" layoutY="349.0" mnemonicParsing="false" text="Customer" textFill="WHITE" toggleGroup="$type" />
+      <Button layoutX="360.0" layoutY="402.0" mnemonicParsing="false" onAction="#Register" style="-fx-background-radius: 50;" text="Register">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="ErrName" layoutX="574.0" layoutY="123.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrLastName" layoutX="574.0" layoutY="160.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrEmail" layoutX="573.0" layoutY="197.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrPhone" layoutX="572.0" layoutY="233.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrUsername" layoutX="572.0" layoutY="270.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrPassword" layoutX="572.0" layoutY="307.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrType" layoutX="572.0" layoutY="344.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

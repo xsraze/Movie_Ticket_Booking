@@ -239,8 +239,6 @@ public class HomeController {
     @FXML
     void Login(MouseEvent event) throws IOException {
 
-        System.out.println(login_btn.getText());
-
         if(login_btn.getText().equals("Log in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -264,14 +262,26 @@ public class HomeController {
     }
 
     @FXML
+    void Signin(MouseEvent event) throws IOException {
+        if(signin_btn.getText().equals("Sign in"))
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("Registration.fxml"));
+            AnchorPane registration = fxmlLoader.load();
+            RegistrationController rc = fxmlLoader.getController();
+            bpane.setCenter(registration);
+        }
+    }
+
+    @FXML
     void profile(MouseEvent event) throws IOException {
         if(login_btn.getText().equals("Log in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("Login.fxml"));
-            AnchorPane Film = fxmlLoader.load();
+            AnchorPane login = fxmlLoader.load();
             LoginController lc = fxmlLoader.getController();
-            bpane.setCenter(Film);
+            bpane.setCenter(login);
         }
 
         else
