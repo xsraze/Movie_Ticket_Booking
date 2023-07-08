@@ -6,16 +6,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="419.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.LoginController">
+<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.LoginController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="134.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@login_logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="User_txt" layoutX="58.0" layoutY="200.0" prefHeight="31.0" prefWidth="304.0" promptText="     Username" />
-      <TextField fx:id="Pw_txt" layoutX="58.0" layoutY="258.0" prefHeight="31.0" prefWidth="304.0" promptText="      Password" />
-      <Button fx:id="Submit_login" layoutX="173.0" layoutY="323.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="83.0" text="Submit" />
+      <TextField fx:id="User_txt" layoutX="261.0" layoutY="253.0" prefHeight="31.0" prefWidth="304.0" promptText="     Username" />
+      <TextField fx:id="Pw_txt" layoutX="261.0" layoutY="311.0" prefHeight="31.0" prefWidth="304.0" promptText="      Password" />
+      <Button layoutX="376.0" layoutY="376.0" mnemonicParsing="false" onAction="#Submit_login" prefHeight="31.0" prefWidth="83.0" text="Submit" />
    </children>
 </AnchorPane>

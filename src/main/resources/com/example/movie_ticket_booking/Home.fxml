@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="1081.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.HomeController">
+<BorderPane fx:id="bpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="1081.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.HomeController">
    <top>
       <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
          <children>
@@ -25,17 +25,17 @@
                   <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492189745217576/image-removebg-preview_1.png" />
                </image>
             </ImageView>
-            <TextField fx:id="searchbar" layoutX="362.0" layoutY="18.0" prefHeight="36.0" prefWidth="283.0" promptText="Search" />
-            <Button layoutX="659.0" layoutY="18.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="36.0" text="🔎" />
-            <Button fx:id="login_btn" layoutX="887.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Log in" textFill="WHITE">
+            <TextField fx:id="searchbar" layoutX="201.0" layoutY="21.0" prefHeight="36.0" prefWidth="283.0" promptText="Search" />
+            <Button layoutX="498.0" layoutY="21.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="36.0" text="🔎" />
+            <Button fx:id="login_btn" layoutX="887.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#Login" style="-fx-background-color: transparent;" text="Log in" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
-            <Button fx:id="signin_btn" layoutX="789.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign in" textFill="WHITE">
+            <Button fx:id="signin_btn" layoutX="667.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign in" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
-            <ImageView fx:id="logo1" fitHeight="65.0" fitWidth="78.0" layoutX="1000.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="logo1" fitHeight="52.0" fitWidth="62.0" layoutX="1016.0" layoutY="12.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492999405289554/image-removebg-preview.png" />
                </image></ImageView>

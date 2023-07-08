@@ -12,6 +12,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,6 +25,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class HomeController {
+
+    private int account;
+    @FXML
+    private BorderPane bpane;
     @FXML
     private ComboBox<?> combo_date;
 
@@ -58,7 +64,8 @@ public class HomeController {
     @FXML
     private GridPane MovieContainer;
 
-    public void Initialisation(){
+    public void Initialisation(int acc){
+        account=acc;
         int col = 0;
         int line = 1;
 
@@ -90,6 +97,26 @@ public class HomeController {
         } catch (Exception e1) {
             System.out.println(e1.getMessage());
         }
+
+        if(account!=0)
+        {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM `users`");
+
+                while (rs.next())
+                {
+                    if(Integer.parseInt(rs.getString("ID_user")) == account)
+                    signin_btn.setText("Hello "+rs.getString("username")+"!");
+                    login_btn.setText("Log out");
+                }
+                con.close();
+            } catch (Exception e1) {
+                System.out.println(e1.getMessage());
+            }
+        }
     }
 
     @FXML
@@ -98,7 +125,7 @@ public class HomeController {
         Parent root = fxmlLoader.load();
         Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         HomeController hc = fxmlLoader.getController();
-        hc.Initialisation();
+        hc.Initialisation(account);
         Scene scene = new Scene(root);
         lstage.setScene(scene);
         lstage.show();
@@ -206,6 +233,50 @@ public class HomeController {
             con.close();
         } catch (Exception e1) {
             System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void Login(MouseEvent event) throws IOException {
+
+        System.out.println(login_btn.getText());
+
+        if(login_btn.getText().equals("Log in"))
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("Login.fxml"));
+            AnchorPane Film = fxmlLoader.load();
+            LoginController lc = fxmlLoader.getController();
+            bpane.setCenter(Film);
+        }
+
+        else
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+            HomeController hc = fxmlLoader.getController();
+            hc.Initialisation(0);
+            Scene scene = new Scene(root);
+            lstage.setScene(scene);
+            lstage.show();
+        }
+    }
+
+    @FXML
+    void profile(MouseEvent event) throws IOException {
+        if(login_btn.getText().equals("Log in"))
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("Login.fxml"));
+            AnchorPane Film = fxmlLoader.load();
+            LoginController lc = fxmlLoader.getController();
+            bpane.setCenter(Film);
+        }
+
+        else
+        {
+
         }
     }
 }

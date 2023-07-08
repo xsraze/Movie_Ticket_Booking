@@ -12,9 +12,8 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-
         HomeController hc = fxmlLoader.getController();
-        hc.Initialisation();
+        hc.Initialisation(0);
 
         stage.setTitle("Hello!");
         stage.setScene(scene);
