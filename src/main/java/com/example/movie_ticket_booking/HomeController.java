@@ -76,7 +76,6 @@ public class HomeController {
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
                 mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
-
                 if(col == 3)
                 {
                     col =0;
