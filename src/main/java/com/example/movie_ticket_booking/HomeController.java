@@ -286,7 +286,12 @@ public class HomeController {
 
         else
         {
-
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("Info.fxml"));
+            AnchorPane info = fxmlLoader.load();
+            InfoController ic = fxmlLoader.getController();
+            ic.SetInfo(account);
+            bpane.setCenter(info);
         }
     }
 }
