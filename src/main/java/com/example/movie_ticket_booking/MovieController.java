@@ -61,7 +61,7 @@ public class MovieController {
             Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
             HomeController hc = fxmlLoader.getController();
             try {
-                hc.Initialisation2();
+                hc.Initialisation2(Name.getText());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

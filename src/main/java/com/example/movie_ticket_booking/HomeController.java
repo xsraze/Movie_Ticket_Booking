@@ -121,7 +121,7 @@ public class HomeController {
             }
         }
     }
-    public void Initialisation2() throws IOException {
+    public void Initialisation2(String name) throws IOException {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
@@ -129,19 +129,13 @@ public class HomeController {
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
 
             FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
-            FXMLLoader fxmlLoaderMovie = new FXMLLoader(MainApplication.class.getResource("MovieHome.fxml"));
-            VBox moviePane = fxmlLoaderMovie.load();
             AnchorPane bookPane = fxmlLoaderBook.load();
             BookController bc = fxmlLoaderBook.getController();
-            MovieController mc = fxmlLoaderMovie.getController();
             bpane.setCenter(bookPane);
-            mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
 
             while (rs.next()) {
-                System.out.println(mc.Id_movie_on_click);
-                if (rs.getInt("Id_movie") == mc.Id_movie_on_click) {
+                if (rs.getString("Name").equals(name)) {
                     bc.setBook(rs.getString("poster"), rs.getString("Name"));
-                    System.out.println("ok");
                     break;
                 }
             }
@@ -151,6 +145,7 @@ public class HomeController {
             System.out.println(e1.getMessage());
         }
     }
+
 
 
     @FXML
