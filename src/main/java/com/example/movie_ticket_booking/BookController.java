@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class BookController {
@@ -119,5 +120,10 @@ public class BookController {
 
     @FXML
     private ComboBox<?> venue_cb;
+
+    public void setBook(String post, String nom){
+        film_img.setImage(new Image(post));
+        film_titre.setText(nom);
+    }
 
 }

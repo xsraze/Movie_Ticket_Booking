@@ -1,5 +1,6 @@
 package com.example.movie_ticket_booking;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -29,6 +30,10 @@ public class HomeController {
     private int account;
     @FXML
     private BorderPane bpane;
+
+    public BorderPane getBorderPane() {
+        return bpane;
+    }
     @FXML
     private ComboBox<?> combo_date;
 
@@ -74,7 +79,6 @@ public class HomeController {
 
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
-            System.out.println("Hello");
 
             while (rs.next())
             {
@@ -108,7 +112,7 @@ public class HomeController {
                 while (rs.next())
                 {
                     if(Integer.parseInt(rs.getString("ID_user")) == account)
-                    signin_btn.setText("Hello "+rs.getString("username")+"!");
+                        signin_btn.setText("Hello "+rs.getString("username")+"!");
                     login_btn.setText("Log out");
                 }
                 con.close();
@@ -117,6 +121,37 @@ public class HomeController {
             }
         }
     }
+    public void Initialisation2() throws IOException {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+            FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
+            FXMLLoader fxmlLoaderMovie = new FXMLLoader(MainApplication.class.getResource("MovieHome.fxml"));
+            VBox moviePane = fxmlLoaderMovie.load();
+            AnchorPane bookPane = fxmlLoaderBook.load();
+            BookController bc = fxmlLoaderBook.getController();
+            MovieController mc = fxmlLoaderMovie.getController();
+            bpane.setCenter(bookPane);
+            mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+
+            while (rs.next()) {
+                System.out.println(mc.Id_movie_on_click);
+                if (rs.getInt("Id_movie") == mc.Id_movie_on_click) {
+                    bc.setBook(rs.getString("poster"), rs.getString("Name"));
+                    System.out.println("ok");
+                    break;
+                }
+            }
+
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
 
     @FXML
     void Home(MouseEvent event) throws IOException {
