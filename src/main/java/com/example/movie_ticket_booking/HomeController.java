@@ -6,10 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -63,6 +60,23 @@ public class HomeController {
     private Button signin_btn;
     @FXML
     private GridPane MovieContainer;
+    @FXML
+    private Label txtadmin;
+
+    @FXML
+    private Label txtanalyzed;
+
+    @FXML
+    private Label txtdiscount;
+
+    @FXML
+    private Label txtprofile;
+
+    @FXML
+    private Label txtsale;
+
+    @FXML
+    private Label txtupdate;
 
     public void Initialisation(int acc){
         account=acc;
@@ -109,13 +123,35 @@ public class HomeController {
                 while (rs.next())
                 {
                     if(Integer.parseInt(rs.getString("ID_user")) == account)
-                    signin_btn.setText("Hello "+rs.getString("username")+"!");
+                    {
+                        signin_btn.setText("Hello "+rs.getString("username")+"!");
+
+                        if(rs.getString("Type").equals("admin"))
+                        {
+                            txtadmin.setText("Admin");
+                            txtanalyzed.setText("Movies analyzed");
+                            txtupdate.setText("Update movie");
+                            txtdiscount.setText("Discount Offers");
+                            txtprofile.setText("Update profiles");
+                            txtsale.setText("Sales Analyzed");
+                        }
+                    }
+
                     login_btn.setText("Log out");
                 }
                 con.close();
             } catch (Exception e1) {
                 System.out.println(e1.getMessage());
             }
+        }
+
+        else{
+            txtadmin.setText("");
+            txtanalyzed.setText("");
+            txtupdate.setText("");
+            txtdiscount.setText("");
+            txtprofile.setText("");
+            txtsale.setText("");
         }
     }
 
@@ -292,6 +328,59 @@ public class HomeController {
             InfoController ic = fxmlLoader.getController();
             ic.SetInfo(account);
             bpane.setCenter(info);
+        }
+    }
+
+    @FXML
+    void DiscountOffers(MouseEvent event) {
+
+    }
+
+    @FXML
+    void MovieAnalyzed(MouseEvent event) {
+
+    }
+
+    @FXML
+    void SalesAnalyzed(MouseEvent event) {
+
+    }
+
+    @FXML
+    void UpdateMovie(MouseEvent event) {
+
+    }
+
+    @FXML
+    void UpdateProfiles() {
+
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `users`");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("User.fxml"));
+                VBox UserBox = fxmlLoader.load();
+                UserController uc = fxmlLoader.getController();
+                uc.setUser(rs.getString("Name"), rs.getString("LastName"), rs.getString("email"), rs.getString("phone"), rs.getString("username"), rs.getString("password"), rs.getString("Type"), rs.getInt("ID_user"), account);
+
+                ++line;
+
+                MovieContainer.add(UserBox, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
         }
     }
 }
