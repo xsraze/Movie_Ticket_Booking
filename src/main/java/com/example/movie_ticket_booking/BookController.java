@@ -1,5 +1,7 @@
 package com.example.movie_ticket_booking;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.sql.*;
 
 public class BookController {
     @FXML
@@ -119,11 +123,17 @@ public class BookController {
     private Button s9;
 
     @FXML
-    private ComboBox<?> venue_cb;
+    private ComboBox<String> venue_cb;
 
-    public void setBook(String post, String nom){
+    ObservableList<String> items = FXCollections.observableArrayList();
+
+
+    public void setBook(String post, String nom, ObservableList items, ObservableList items2) throws SQLException {
+
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
+        venue_cb.setItems(items);
+        date_hour.setItems(items2);
     }
 
 }

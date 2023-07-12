@@ -1,5 +1,7 @@
 package com.example.movie_ticket_booking;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -126,18 +128,27 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='"+name+"' ");
 
             FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
             AnchorPane bookPane = fxmlLoaderBook.load();
             BookController bc = fxmlLoaderBook.getController();
             bpane.setCenter(bookPane);
 
+            ObservableList items = FXCollections.observableArrayList();
+
+            ObservableList items2 = FXCollections.observableArrayList();
+
+
             while (rs.next()) {
-                if (rs.getString("Name").equals(name)) {
-                    bc.setBook(rs.getString("poster"), rs.getString("Name"));
-                    break;
-                }
+                String item = rs.getString("cinema.name");
+                items.add(item);
+
+                String itemm = rs.getString("Date");
+                items2.add(itemm);
+
+
+                bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2);
             }
 
             con.close();
