@@ -338,12 +338,18 @@ public class HomeController {
 
     @FXML
     void MovieAnalyzed(MouseEvent event) throws IOException {
+
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("AddMovie.fxml"));
         AnchorPane Addmovie = fxmlLoader.load();
         AddMovieController ac = fxmlLoader.getController();
         ac.setId(account);
-        bpane.setCenter(Addmovie);
+
+        MovieContainer.add(Addmovie, 0, 1);
     }
 
     @FXML

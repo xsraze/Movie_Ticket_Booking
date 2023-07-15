@@ -96,5 +96,6 @@
          </font>
       </Label>
       <TextArea fx:id="txtResume" layoutX="391.0" layoutY="345.0" prefHeight="69.0" prefWidth="149.0" promptText="Resume" wrapText="true" />
+      <Label layoutX="843.0" layoutY="468.0" prefHeight="17.0" prefWidth="31.0" />
    </children>
 </AnchorPane>
