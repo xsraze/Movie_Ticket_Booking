@@ -129,8 +129,8 @@ public class HomeController {
                         if(rs.getString("Type").equals("admin"))
                         {
                             txtadmin.setText("Admin");
-                            txtanalyzed.setText("Movies analyzed");
-                            txtupdate.setText("Update movie");
+                            txtanalyzed.setText("Add Movies");
+                            txtupdate.setText("Update Movies");
                             txtdiscount.setText("Discount Offers");
                             txtprofile.setText("Update profiles");
                             txtsale.setText("Sales Analyzed");
@@ -337,8 +337,13 @@ public class HomeController {
     }
 
     @FXML
-    void MovieAnalyzed(MouseEvent event) {
-
+    void MovieAnalyzed(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("AddMovie.fxml"));
+        AnchorPane Addmovie = fxmlLoader.load();
+        AddMovieController ac = fxmlLoader.getController();
+        ac.setId(account);
+        bpane.setCenter(Addmovie);
     }
 
     @FXML
@@ -347,8 +352,36 @@ public class HomeController {
     }
 
     @FXML
-    void UpdateMovie(MouseEvent event) {
+    void UpdateMovie() {
 
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("MovieUpdate.fxml"));
+                VBox MovieUpdateBox = fxmlLoader.load();
+                MovieUpdateController uc = fxmlLoader.getController();
+                uc.setMovie(rs.getString("Name"), rs.getString("Author"), rs.getString("poster"), rs.getInt("Year"), rs.getString("Genre"), rs.getString("Review"), rs.getString("Resume"), rs.getInt("ID_movie"), account);
+
+                ++line;
+
+                MovieContainer.add(MovieUpdateBox, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
     }
 
     @FXML

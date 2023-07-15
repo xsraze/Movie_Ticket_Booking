@@ -157,6 +157,7 @@ public class RegistrationController {
                     {
                         if(rs2.getString("username").equals(txtUsername.getText()))
                         {
+
                             int account = Integer.parseInt(rs2.getString("ID_user"));
 
                             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.AddMovieController">
+   <children>
+      <Label layoutX="330.0" layoutY="14.0" text="Add Movie" textFill="WHITE">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="272.0" layoutY="123.0" text="Name" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="272.0" layoutY="160.0" text="Realisator" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="197.0" text="Year" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="233.0" text="Genre" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="270.0" text="Poster" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="307.0" text="Review" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="270.0" layoutY="366.0" text="Resume" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtName" layoutX="393.0" layoutY="124.0" promptText="Name" />
+      <TextField fx:id="txtRealisator" layoutX="392.0" layoutY="163.0" promptText="Realisator" />
+      <TextField fx:id="txtYear" layoutX="391.0" layoutY="199.0" promptText="Year" />
+      <TextField fx:id="txtGenre" layoutX="391.0" layoutY="235.0" promptText="Genre" />
+      <TextField fx:id="txtReview" layoutX="391.0" layoutY="308.0" promptText="Review" />
+      <TextField fx:id="txtPoster" layoutX="391.0" layoutY="272.0" promptText="Poster" />
+      <Button layoutX="380.0" layoutY="430.0" mnemonicParsing="false" onAction="#Add" style="-fx-background-radius: 50;" text="Add">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="ErrName" layoutX="574.0" layoutY="123.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrRealisator" layoutX="574.0" layoutY="160.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrYear" layoutX="573.0" layoutY="197.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrGenre" layoutX="572.0" layoutY="233.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrPoster" layoutX="572.0" layoutY="270.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrReview" layoutX="572.0" layoutY="307.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrResume" layoutX="571.0" layoutY="362.0" textFill="RED">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtResume" layoutX="391.0" layoutY="345.0" prefHeight="69.0" prefWidth="149.0" promptText="Resume" wrapText="true" />
+   </children>
+</AnchorPane>
