@@ -62,7 +62,8 @@ public class HomeController {
     private GridPane MovieContainer;
     @FXML
     private Label txtadmin;
-
+    @FXML
+    private Label txtsaleMovie;
     @FXML
     private Label txtanalyzed;
 
@@ -73,7 +74,7 @@ public class HomeController {
     private Label txtprofile;
 
     @FXML
-    private Label txtsale;
+    private Label txtsaleCinema;
 
     @FXML
     private Label txtupdate;
@@ -133,7 +134,8 @@ public class HomeController {
                             txtupdate.setText("Update Movies");
                             txtdiscount.setText("Discount Offers");
                             txtprofile.setText("Update profiles");
-                            txtsale.setText("Sales Analyzed");
+                            txtsaleCinema.setText("Sales Analyzed by Cinema");
+                            txtsaleMovie.setText("Sales Analyzed by Movie");
                         }
                     }
 
@@ -151,7 +153,8 @@ public class HomeController {
             txtupdate.setText("");
             txtdiscount.setText("");
             txtprofile.setText("");
-            txtsale.setText("");
+            txtsaleCinema.setText("");
+            txtsaleMovie.setText("");
         }
     }
 
@@ -353,8 +356,67 @@ public class HomeController {
     }
 
     @FXML
-    void SalesAnalyzed(MouseEvent event) {
+    void SalesCinema(MouseEvent event) {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
 
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("MovieUpdate.fxml"));
+                VBox MovieUpdateBox = fxmlLoader.load();
+                MovieUpdateController uc = fxmlLoader.getController();
+                uc.setMovie(rs.getString("Name"), rs.getString("Author"), rs.getString("poster"), rs.getInt("Year"), rs.getString("Genre"), rs.getString("Review"), rs.getString("Resume"), rs.getInt("ID_movie"), account);
+
+                ++line;
+
+                MovieContainer.add(MovieUpdateBox, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void SalesMovie(MouseEvent event) {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesMovie.fxml"));
+                VBox SalesMovieBox = fxmlLoader.load();
+                SalesMovieController smc = fxmlLoader.getController();
+                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("movie.Genre"));
+
+                ++line;
+
+                MovieContainer.add(SalesMovieBox, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
     }
 
     @FXML

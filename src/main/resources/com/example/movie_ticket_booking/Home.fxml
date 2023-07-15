@@ -128,7 +128,12 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <Label fx:id="txtsale" alignment="CENTER" layoutX="49.0" layoutY="392.0" onMouseClicked="#SalesAnalyzed" prefHeight="25.0" prefWidth="106.0" textFill="WHITE">
+            <Label fx:id="txtsaleCinema" alignment="CENTER" layoutY="392.0" onMouseClicked="#SalesCinema" prefHeight="25.0" prefWidth="198.0" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="txtsaleMovie" alignment="CENTER" layoutY="424.0" onMouseClicked="#SalesMovie" prefHeight="25.0" prefWidth="199.0" textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
