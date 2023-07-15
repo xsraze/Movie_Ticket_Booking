@@ -24,8 +24,6 @@ public class BookController {
     public Label film_titre;
 
     @FXML
-    private Button min_btn;
-    @FXML
     private Button lock_venue;
 
     @FXML
@@ -33,9 +31,6 @@ public class BookController {
 
     @FXML
     private TextField place_nb;
-
-    @FXML
-    private Button plus_btn;
 
     @FXML
     private Button s1;
@@ -139,7 +134,6 @@ public class BookController {
 
 
     public void setBook(String post, String nom, ObservableList items, ObservableList items2) throws SQLException {
-
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
         venue_cb.setItems(items);
@@ -156,18 +150,16 @@ public class BookController {
         if(!venue_cb.isDisable()){
             try {
                 ResultSet rs2 = stat2.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND cinema.name='" + selectedCinema + "' ");
-
                 while (rs2.next()) {
                     String date = rs2.getString("Date");
                     if (!rs2.wasNull()) {
                         updatedItems2.add(date);
                     }
                 }
-
                 date_hour.setItems(updatedItems2);
+                lock_cinema();
                 stat2.close();
                 con2.close();
-
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -184,7 +176,6 @@ public class BookController {
         if (!date_hour.isDisable()) {
             try {
                 ResultSet rs3 = stat3.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND session.date='" + selectedDate + "' ");
-
                 while (rs3.next()) {
                     String cinema = rs3.getString("cinema.name");
                     if (!rs3.wasNull()) {
@@ -192,12 +183,15 @@ public class BookController {
                     }
                 }
                 venue_cb.setItems(updatedItems);
+                lock_date();
                 con3.close();
                 stat3.close();
-
             } catch (Exception e) {
                 System.out.println("zizi");
             }
         }
+    }
+    public void seats(){
+
     }
 }
