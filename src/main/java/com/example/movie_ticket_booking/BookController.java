@@ -2,7 +2,9 @@ package com.example.movie_ticket_booking;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -11,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BookController {
 
@@ -124,6 +128,8 @@ public class BookController {
 
     @FXML
     public ComboBox<String> venue_cb;
+    public Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+    public Statement stat4 = con4.createStatement();
     public Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
     public Statement stat3 = con3.createStatement();
     public Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -164,6 +170,9 @@ public class BookController {
                 System.out.println(e.getMessage());
             }
         }
+        if (date_hour.isDisable() && venue_cb.isDisable()) {
+            setSeatButtons();
+        }
     }
 
     public void lock_date() {
@@ -190,8 +199,90 @@ public class BookController {
                 System.out.println("zizi");
             }
         }
+        if (date_hour.isDisable() && venue_cb.isDisable()) {
+            setSeatButtons();
+        }
     }
-    public void seats(){
+    public void setSeatButtons() {
+        if (date_hour.isDisable() && venue_cb.isDisable()) {
+            try {
+                String selectedDate = date_hour.getSelectionModel().getSelectedItem();
+                String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
 
+                ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
+
+                if (rs4.next()) {
+                    int sessionId = rs4.getInt("ID_session");
+
+                    ResultSet rs5 = stat4.executeQuery("SELECT Seat_nb FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND reserved = 1");
+
+                    Set<Integer> reservedSeats = new HashSet<>();
+
+                    while (rs5.next()) {
+                        int seatNumber = rs5.getInt("Seat_nb");
+                        reservedSeats.add(seatNumber);
+                    }
+
+                    rs5.close();
+
+                    for (int seatNumber = 1; seatNumber <= 30; seatNumber++) {
+                        String seatButtonId = "s" + seatNumber;
+                        Button seatButton = (Button) getClass().getDeclaredField(seatButtonId).get(this);
+
+                        if (reservedSeats.contains(seatNumber)) {
+                            seatButton.setDisable(true);
+                        } else {
+                            seatButton.setDisable(false);
+                        }
+                    }
+                }
+
+                rs4.close();
+            } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+
+    @FXML
+    public void seats(ActionEvent event){
+        String selectedDate = date_hour.getSelectionModel().getSelectedItem();
+        String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
+        if(date_hour.isDisable()&&venue_cb.isDisable()){
+            if (selectedDate != null && selectedCinema != null) {
+                try {
+                    ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
+
+                    if (rs4.next()) {
+                        int sessionId = rs4.getInt("ID_session");
+                        Button seatButton = (Button) event.getSource();
+                        int seatNumber = Integer.parseInt(seatButton.getText());
+
+                        ResultSet rs5 = stat4.executeQuery("SELECT reserved FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = "+sessionId+") AND Seat_nb = "+seatNumber);
+
+                        if (rs5.next()) {
+                            boolean reserved = rs5.getBoolean("reserved");
+
+                            if (!reserved) {
+
+                                String request ="UPDATE seats SET reserved = 1 WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = "+sessionId+") AND Seat_nb = "+seatNumber;
+                                stat4.executeUpdate(request);
+                                seatButton.setDisable(true);
+
+                                System.out.println("Place réservée!");
+                            } else {
+                                System.out.println("La place est déjà réservée !");
+                            }
+                        }
+                        rs5.close();
+                    }
+                    rs4.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
     }
 }

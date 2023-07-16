@@ -18,38 +18,38 @@
          </font>
       </Label>
       <ComboBox fx:id="venue_cb" layoutX="422.0" layoutY="114.0" onAction="#combo_cinema" prefHeight="25.0" prefWidth="374.0" promptText="Select a venue" />
-      <Button fx:id="s1" layoutX="464.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="1" textFill="#ffffff00">
+      <Button fx:id="s1" layoutX="464.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="1" textFill="#ffffff00">
          <font>
             <Font />
          </font></Button>
-      <Button fx:id="s4" layoutX="591.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="4" textFill="TRANSPARENT" />
-      <Button fx:id="s5" layoutX="627.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="5" textFill="TRANSPARENT" />
-      <Button fx:id="s6" layoutX="683.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="6" textFill="TRANSPARENT" />
-      <Button fx:id="s7" layoutX="717.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="7" textFill="TRANSPARENT" />
-      <Button fx:id="s3" layoutX="555.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="3" textFill="TRANSPARENT" />
-      <Button fx:id="s2" layoutX="499.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="2" textFill="TRANSPARENT" />
-      <Button fx:id="s8" layoutX="464.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="8" textFill="TRANSPARENT" />
-      <Button fx:id="s11" layoutX="591.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="11" textFill="TRANSPARENT" />
-      <Button fx:id="s12" layoutX="627.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="12" textFill="TRANSPARENT" />
-      <Button fx:id="s13" layoutX="683.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="13" textFill="TRANSPARENT" />
-      <Button fx:id="s14" layoutX="717.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="14" textFill="TRANSPARENT" />
-      <Button fx:id="s10" layoutX="555.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="10" textFill="TRANSPARENT" />
-      <Button fx:id="s9" layoutX="499.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="9" textFill="TRANSPARENT" />
-      <Button fx:id="s15" layoutX="464.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="15" textFill="TRANSPARENT" />
-      <Button fx:id="s18" layoutX="591.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="18" textFill="TRANSPARENT" />
-      <Button fx:id="s19" layoutX="627.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="19" textFill="TRANSPARENT" />
-      <Button fx:id="s20" layoutX="683.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="20" textFill="TRANSPARENT" />
-      <Button fx:id="s21" layoutX="717.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="21" textFill="TRANSPARENT" />
-      <Button fx:id="s17" layoutX="555.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="17" textFill="TRANSPARENT" />
-      <Button fx:id="s16" layoutX="499.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="16" textFill="TRANSPARENT" />
-      <Button fx:id="s23" layoutX="555.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="23" textFill="TRANSPARENT" />
-      <Button fx:id="s24" layoutX="590.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="24" textFill="TRANSPARENT" />
-      <Button fx:id="s25" layoutX="627.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="25" textFill="TRANSPARENT" />
-      <Button fx:id="s26" layoutX="683.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="26" textFill="TRANSPARENT" />
-      <Button fx:id="s22" layoutX="499.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="22" textFill="TRANSPARENT" />
-      <Button fx:id="s27" layoutX="539.0" layoutY="388.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="27" textFill="TRANSPARENT" />
-      <Button fx:id="s28" layoutX="574.0" layoutY="388.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="28" textFill="TRANSPARENT" />
-      <Button fx:id="s30" layoutX="644.0" layoutY="388.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="30" textFill="TRANSPARENT" />
+      <Button fx:id="s4" layoutX="591.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="4" textFill="TRANSPARENT" />
+      <Button fx:id="s5" layoutX="627.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="5" textFill="TRANSPARENT" />
+      <Button fx:id="s6" layoutX="683.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="6" textFill="TRANSPARENT" />
+      <Button fx:id="s7" layoutX="717.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="7" textFill="TRANSPARENT" />
+      <Button fx:id="s3" layoutX="555.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="3" textFill="TRANSPARENT" />
+      <Button fx:id="s2" layoutX="499.0" layoutY="251.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="2" textFill="TRANSPARENT" />
+      <Button fx:id="s8" layoutX="464.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="8" textFill="TRANSPARENT" />
+      <Button fx:id="s11" layoutX="591.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="11" textFill="TRANSPARENT" />
+      <Button fx:id="s12" layoutX="627.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="12" textFill="TRANSPARENT" />
+      <Button fx:id="s13" layoutX="683.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="13" textFill="TRANSPARENT" />
+      <Button fx:id="s14" layoutX="717.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="14" textFill="TRANSPARENT" />
+      <Button fx:id="s10" layoutX="555.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="10" textFill="TRANSPARENT" />
+      <Button fx:id="s9" layoutX="499.0" layoutY="285.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="9" textFill="TRANSPARENT" />
+      <Button fx:id="s15" layoutX="464.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="15" textFill="TRANSPARENT" />
+      <Button fx:id="s18" layoutX="591.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="18" textFill="TRANSPARENT" />
+      <Button fx:id="s19" layoutX="627.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="19" textFill="TRANSPARENT" />
+      <Button fx:id="s20" layoutX="683.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="20" textFill="TRANSPARENT" />
+      <Button fx:id="s21" layoutX="717.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="21" textFill="TRANSPARENT" />
+      <Button fx:id="s17" layoutX="555.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="17" textFill="TRANSPARENT" />
+      <Button fx:id="s16" layoutX="499.0" layoutY="319.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="16" textFill="TRANSPARENT" />
+      <Button fx:id="s23" layoutX="555.0" layoutY="353.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="23" textFill="TRANSPARENT" />
+      <Button fx:id="s24" layoutX="590.0" layoutY="353.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="24" textFill="TRANSPARENT" />
+      <Button fx:id="s25" layoutX="627.0" layoutY="353.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="25" textFill="TRANSPARENT" />
+      <Button fx:id="s26" layoutX="683.0" layoutY="353.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="26" textFill="TRANSPARENT" />
+      <Button fx:id="s22" layoutX="499.0" layoutY="353.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="22" textFill="TRANSPARENT" />
+      <Button fx:id="s27" layoutX="539.0" layoutY="388.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="27" textFill="TRANSPARENT" />
+      <Button fx:id="s28" layoutX="574.0" layoutY="388.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="28" textFill="TRANSPARENT" />
+      <Button fx:id="s30" layoutX="644.0" layoutY="388.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="30" textFill="TRANSPARENT" />
       <Label layoutX="570.0" layoutY="210.0" prefHeight="30.0" prefWidth="69.0" text="Screen" textFill="WHITE">
          <font>
             <Font size="20.0" />
@@ -61,7 +61,7 @@
          </font>
       </Button>
       <ComboBox fx:id="date_hour" layoutX="423.0" layoutY="162.0" onAction="#combo_date" prefHeight="25.0" prefWidth="374.0" promptText="Select a date and an hour" />
-      <Button fx:id="s29" layoutX="609.0" layoutY="388.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="29" textFill="TRANSPARENT" />
+      <Button fx:id="s29" layoutX="609.0" layoutY="388.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="29" textFill="TRANSPARENT" />
       <Button fx:id="lock_venue" layoutX="759.0" layoutY="37.0" mnemonicParsing="false" onAction="#lock_cinema" onMousePressed="#lock_cinema" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparant;" />
       <Button fx:id="lock_hour" layoutX="754.0" layoutY="76.0" mnemonicParsing="false" onAction="#lock_date" onMousePressed="#lock_date" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparant;" />
    </children>
