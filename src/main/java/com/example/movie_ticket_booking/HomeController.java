@@ -340,8 +340,35 @@ public class HomeController {
     }
 
     @FXML
-    void DiscountOffers(MouseEvent event) {
+    void DiscountOffers() {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
 
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie WHERE session.ID_movie=movie.ID_movie");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesDiscount.fxml"));
+                VBox SalesDiscount = fxmlLoader.load();
+                SalesDiscountController sdc = fxmlLoader.getController();
+                sdc.setDiscountInfo(rs.getString("movie.name"), rs.getString("session.id_cinema"), rs.getString("session.date"), rs.getString("session.ID_room"), rs.getString("movie.poster"), rs.getString("session.discount"), rs.getInt("session.ID_session"), account);
+                System.out.println("Probleme");
+                ++line;
+
+                MovieContainer.add(SalesDiscount, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
     }
 
     @FXML
