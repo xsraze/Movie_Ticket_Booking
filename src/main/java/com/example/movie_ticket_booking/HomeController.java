@@ -82,6 +82,12 @@ public class HomeController {
     @FXML
     private Label txtupdate;
 
+    @FXML
+    private Label txtAddSession;
+
+    @FXML
+    private Label txtUpdateSession;
+
     public void Initialisation(int acc){
         account=acc;
         int col = 0;
@@ -134,6 +140,8 @@ public class HomeController {
                         {
                             txtadmin.setText("Admin");
                             txtanalyzed.setText("Add Movies");
+                            txtAddSession.setText("Add Session");
+                            txtUpdateSession.setText("Update Session");
                             txtupdate.setText("Update Movies");
                             txtdiscount.setText("Discount Offers");
                             txtprofile.setText("Update profiles");
@@ -154,6 +162,8 @@ public class HomeController {
         else{
             txtadmin.setText("");
             txtanalyzed.setText("");
+            txtUpdateSession.setText("");
+            txtAddSession.setText("");
             txtupdate.setText("");
             txtdiscount.setText("");
             txtprofile.setText("");
@@ -547,5 +557,15 @@ public class HomeController {
         } catch (Exception e1) {
             System.out.println(e1.getMessage());
         }
+    }
+
+    @FXML
+    void UpdateSession(MouseEvent event) {
+
+    }
+
+    @FXML
+    void AddSession(MouseEvent event) {
+
     }
 }
