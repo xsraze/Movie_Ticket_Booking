@@ -64,6 +64,9 @@ public class HomeController {
     private Label txtadmin;
     @FXML
     private Label txtsaleMovie;
+
+    @FXML
+    private Label txtsaleSession;
     @FXML
     private Label txtanalyzed;
 
@@ -136,6 +139,7 @@ public class HomeController {
                             txtprofile.setText("Update profiles");
                             txtsaleCinema.setText("Sales Analyzed by Cinema");
                             txtsaleMovie.setText("Sales Analyzed by Movie");
+                            txtsaleSession.setText("Sales Analyzed by Session");
                         }
                     }
 
@@ -155,6 +159,7 @@ public class HomeController {
             txtprofile.setText("");
             txtsaleCinema.setText("");
             txtsaleMovie.setText("");
+            txtsaleSession.setText("");
         }
     }
 
@@ -367,19 +372,19 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+            ResultSet rs = stat.executeQuery("SELECT * FROM `cinema`");
 
             while (rs.next())
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("MovieUpdate.fxml"));
-                VBox MovieUpdateBox = fxmlLoader.load();
-                MovieUpdateController uc = fxmlLoader.getController();
-                uc.setMovie(rs.getString("Name"), rs.getString("Author"), rs.getString("poster"), rs.getInt("Year"), rs.getString("Genre"), rs.getString("Review"), rs.getString("Resume"), rs.getInt("ID_movie"), account);
+                fxmlLoader.setLocation(getClass().getResource("SalesCinema.fxml"));
+                VBox SalesCinema = fxmlLoader.load();
+                SalesCinemaController scc = fxmlLoader.getController();
+                scc.setSalesMovie(rs.getString("name"), 0, 0);
 
                 ++line;
 
-                MovieContainer.add(MovieUpdateBox, 0, line);
+                MovieContainer.add(SalesCinema, 0, line);
             }
             con.close();
         } catch (Exception e1) {
@@ -407,11 +412,43 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("SalesMovie.fxml"));
                 VBox SalesMovieBox = fxmlLoader.load();
                 SalesMovieController smc = fxmlLoader.getController();
-                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("movie.Genre"));
+                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("movie.Genre"),0,0,rs.getString("movie.poster"));
 
                 ++line;
 
                 MovieContainer.add(SalesMovieBox, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+    }
+
+    @FXML
+    void SalesSession(MouseEvent event) {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        int line = 1;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie WHERE session.ID_movie=movie.ID_movie");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesSession.fxml"));
+                VBox SalesSessionBox = fxmlLoader.load();
+                SalesSessionController ssc = fxmlLoader.getController();
+                ssc.SetSaleSession(rs.getString("movie.Name"), rs.getString("session.id_cinema"), rs.getString("session.Date"), rs.getString("session.ID_room"),0,0,rs.getString("movie.poster"));
+
+                ++line;
+
+                MovieContainer.add(SalesSessionBox, 0, line);
             }
             con.close();
         } catch (Exception e1) {

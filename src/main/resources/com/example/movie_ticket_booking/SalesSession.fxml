@@ -7,37 +7,37 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="867.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.SalesMovieController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="867.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.SalesSessionController">
    <children>
       <AnchorPane prefHeight="214.0" prefWidth="852.0">
          <children>
-            <Label layoutX="60.0" layoutY="22.0" text="Title" textFill="WHITE">
+            <Label layoutX="52.0" layoutY="22.0" text="Movie" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="37.0" layoutY="64.0" text="Realisator" textFill="WHITE">
+            <Label layoutX="51.0" layoutY="66.0" text="Venue" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="59.0" layoutY="106.0" text="Year" textFill="WHITE">
+            <Label layoutX="58.0" layoutY="113.0" text="Date" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="53.0" layoutY="151.0" text="Genre" textFill="WHITE">
+            <Label layoutX="53.0" layoutY="151.0" text="Room" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
             <Line endX="759.6666870117188" endY="1.52587890625E-5" layoutX="103.0" layoutY="200.0" startX="-103.00000762939453" startY="1.52587890625E-5" stroke="WHITE" strokeWidth="3.0" />
-            <Label fx:id="txtTitle" alignment="CENTER" layoutX="139.0" layoutY="22.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
+            <Label fx:id="txtMovie" alignment="CENTER" layoutX="139.0" layoutY="22.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtRealisator" alignment="CENTER" layoutX="139.0" layoutY="64.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
+            <Label fx:id="txtVenue" alignment="CENTER" layoutX="139.0" layoutY="64.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtGenre" alignment="CENTER" layoutX="139.0" layoutY="151.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
+            <Label fx:id="txtRoom" alignment="CENTER" layoutX="139.0" layoutY="151.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
@@ -73,7 +73,7 @@
                </font>
             </Label>
             <ImageView fx:id="imgPoster" fitHeight="168.0" fitWidth="132.0" layoutX="666.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="txtYear1" alignment="CENTER" layoutX="149.0" layoutY="116.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
+            <Label fx:id="txtDate" alignment="CENTER" layoutX="149.0" layoutY="116.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>

@@ -138,6 +138,11 @@
                   <Font size="13.0" />
                </font>
             </Label>
+            <Label fx:id="txtsaleSession" alignment="CENTER" layoutX="-1.0" layoutY="452.0" onMouseClicked="#SalesSession" prefHeight="25.0" prefWidth="199.0" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </left>
    <center>
