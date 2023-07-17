@@ -13,12 +13,28 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.IOException;
+import java.sql.*;
 
-public class AddSessionController {
+public class UpdateSessionController {
+
+    @FXML
+    private ComboBox<String> comboMovie;
+
+    @FXML
+    private ComboBox<String> comboRoom;
+
+    @FXML
+    private ComboBox<String> comboVenue;
+
+    @FXML
+    private TextField txtDate;
+
+    @FXML
+    private TextField txtDiscount;
+
+    @FXML
+    private TextField txtPrice;
 
     @FXML
     private Label ErrDate;
@@ -38,39 +54,88 @@ public class AddSessionController {
     @FXML
     private Label ErrVenue;
 
-    @FXML
-    private ComboBox<String> comboRoom;
-
-    @FXML
-    private ComboBox<String> comboVenue;
-
-    @FXML
-    private ComboBox<String> comboMovie;
-
-    @FXML
-    private TextField txtDate;
-
-    @FXML
-    private TextField txtDiscount;
-
-    @FXML
-    private TextField txtPrice;
-
     private int account;
-
+    private int id_session;
     private int id_movie;
     private int id_venue;
+    private String ID_room;
 
-
-    public void setAccount(int acc) {
-        account=acc;
-    }
-
-    public void SetCombo(ObservableList<String> venue, ObservableList<String> room, ObservableList<String> movie)
+    public void setSession(String movie, String cinema, String ID_room, String Discount, String Price, String Date, int account, int session)
     {
+        this.account = account;
+        this.id_session=session;
+        this.ID_room=ID_room;
+        ObservableList<String> Movie = FXCollections.observableArrayList();
+        ObservableList<String> Cinema = FXCollections.observableArrayList();
+        ObservableList<String> room = FXCollections.observableArrayList();
+
+        Movie.add(movie);
+        Cinema.add(cinema);
+        room.add(ID_room);
+
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie");
+
+            while (rs.next()) {
+                if(!rs.getString("Name").equals(movie))
+                {
+                    String movie_name = rs.getString("Name");
+                    Movie.add(movie_name);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM cinema");
+
+            while (rs.next()) {
+                if(!rs.getString("name").equals(cinema))
+                {
+                    String cinema_name = rs.getString("name");
+                    Cinema.add(cinema_name);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM room");
+
+            while (rs.next()) {
+                if(!rs.getString("ID_room").equals(ID_room))
+                {
+                    String room_id = rs.getString("ID_room");
+                    room.add(room_id);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        comboMovie.setItems(Movie);
+        comboVenue.setItems(Cinema);
         comboRoom.setItems(room);
-        comboVenue.setItems(venue);
-        comboMovie.setItems(movie);
+
+        comboMovie.setPromptText(movie);
+        comboVenue.setPromptText(cinema);
+        comboRoom.setPromptText(ID_room);
+
+        txtPrice.setText(Price);
+        txtDiscount.setText(Discount);
+        txtDate.setText(Date);
     }
 
     @FXML
@@ -125,7 +190,6 @@ public class AddSessionController {
             }
         }
     }
-
 
     @FXML
     void AddAgain(ActionEvent event) {
@@ -235,7 +299,6 @@ public class AddSessionController {
                     Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
                     HomeController hc = fxmlLoader.getController();
                     hc.Initialisation(account);
-                    hc.AddSession();
                     Scene scene = new Scene(root);
                     lstage.setScene(scene);
                     lstage.show();
@@ -249,122 +312,29 @@ public class AddSessionController {
     }
 
     @FXML
-    void AddExit(ActionEvent event) {
-        boolean error=false;
+    public void DeleteSession(ActionEvent event) throws IOException {
+        String request;
 
-        ErrDate.setText("");
-        ErrMovie.setText("");
-        ErrDiscount.setText("");
-        ErrPrice.setText("");
-        ErrRoom.setText("");
-        ErrVenue.setText("");
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
 
-        if(txtDate.getText().length()==0)
-        {
-            ErrDate.setText("Put a Date");
-            error=true;
+            request = "DELETE FROM `session` WHERE ID_session = '" + id_session + "'";
+            stat.executeUpdate(request);
         }
-        if(txtPrice.getText().length()==0)
-        {
-            ErrPrice.setText("Put a Date");
-            error=true;
-        }
-        if(txtDiscount.getText().length()==0)
-        {
-            ErrDiscount.setText("Put a Discount");
-            error=true;
-        }
-        if(!comboMovie.isDisable())
-        {
-            ErrMovie.setText("Put a Movie");
-            error=true;
-        }
-        if(!comboVenue.isDisable())
-        {
-            ErrVenue.setText("Put a Venue");
-            error=true;
-        }
-        if(!comboRoom.isDisable())
-        {
-            ErrRoom.setText("Put a Room");
-            error=true;
+        catch (Exception e1) {
+            System.out.println(e1.getMessage());
         }
 
-        if(!error)
-        {
-
-            try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-                Statement stat = con.createStatement();
-                ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
-
-                while (rs.next())
-                {
-                    if(rs.getString("Name").equals(comboMovie.getSelectionModel().getSelectedItem())){
-                        id_movie=rs.getInt("ID_movie");
-                    }
-                }
-
-            }catch (Exception e1){
-                System.out.println(e1.getMessage());
-            }
-
-            try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-                Statement stat = con.createStatement();
-                ResultSet rs = stat.executeQuery("SELECT * FROM `cinema`");
-
-                while (rs.next())
-                {
-                    if(rs.getString("name").equals(comboVenue.getSelectionModel().getSelectedItem())){
-                        id_venue=rs.getInt("Id_cinema");
-                    }
-                }
-
-            }catch (Exception e1){
-                System.out.println(e1.getMessage());
-            }
-
-            String request;
-
-            try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-                Statement stat = con.createStatement();
-                boolean verified=false;
-
-                ResultSet rs = stat.executeQuery("SELECT * FROM `session`");
-
-                while (rs.next())
-                {
-                    if(txtDate.getText().equals(rs.getString("Date")) && id_venue == rs.getInt("id_cinema") && comboRoom.getSelectionModel().getSelectedItem().equals(rs.getString("ID_room")))
-                    {
-                        ErrDate.setText("This Session already exists");
-                        ErrVenue.setText("This Session already exists");
-                        ErrRoom.setText("This Session already exists");
-                        verified=true;
-                    }
-                }
-
-                if(!verified)
-                {
-                    request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
-
-                    stat.executeUpdate(request);
-
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-                    HomeController hc = fxmlLoader.getController();
-                    hc.Initialisation(account);
-                    Scene scene = new Scene(root);
-                    lstage.setScene(scene);
-                    lstage.show();
-
-                }
-
-            } catch (Exception e1) {
-                ErrDate.setText("Put Date -> YYYY-MM-DD H:M:S");
-            }
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+        HomeController hc = fxmlLoader.getController();
+        hc.Initialisation(account);
+        hc.UpdateSession();
+        Scene scene = new Scene(root);
+        lstage.setScene(scene);
+        lstage.show();
     }
+
 }

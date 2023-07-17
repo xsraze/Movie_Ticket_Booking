@@ -559,19 +559,36 @@ public class HomeController {
     }
 
     @FXML
-    void UpdateSession(MouseEvent event) throws IOException {
+    void UpdateSession() throws IOException {
 
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("UpdateSession.fxml"));
-        AnchorPane UpdateSession = fxmlLoader.load();
-        //AddSessionController asc = fxmlLoader.getController();
-        //asc.setAccount(account);
+        int line = 1;
 
-        //MovieContainer.add(addsession, 0, 1);
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN room ON room.ID_room=session.ID_room JOIN cinema ON cinema.Id_cinema=session.Id_cinema");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("UpdateSession.fxml"));
+                VBox UpdateSession = fxmlLoader.load();
+                UpdateSessionController usc = fxmlLoader.getController();
+                usc.setSession(rs.getString("Name"), rs.getString("cinema.name"), rs.getString("ID_room"), rs.getString("Discount"), rs.getString("Price"), rs.getString("Date"), account, rs.getInt("ID_session"));
+
+                ++line;
+
+                MovieContainer.add(UpdateSession, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
     }
 
     @FXML
