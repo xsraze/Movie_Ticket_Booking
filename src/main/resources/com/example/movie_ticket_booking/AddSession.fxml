@@ -82,14 +82,14 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboVenue" layoutX="391.0" layoutY="162.0" prefHeight="25.0" prefWidth="149.0" promptText="Venue" />
-      <ComboBox fx:id="comboRoom" layoutX="391.0" layoutY="198.0" prefHeight="25.0" prefWidth="149.0" promptText="Room" />
-      <Button layoutX="404.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddAgain" prefHeight="43.0" prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Again">
+      <ComboBox fx:id="comboVenue" layoutX="391.0" layoutY="162.0" onAction="#setVenue" prefHeight="25.0" prefWidth="149.0" promptText="Venue" />
+      <ComboBox fx:id="comboRoom" layoutX="391.0" layoutY="198.0" onAction="#setRoom" prefHeight="25.0" prefWidth="149.0" promptText="Room" />
+      <Button layoutX="416.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddAgain" prefHeight="43.0" prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Again">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="comboMovie" layoutX="391.0" layoutY="124.0" prefHeight="25.0" prefWidth="149.0" promptText="Movie" />
+      <ComboBox fx:id="comboMovie" layoutX="391.0" layoutY="124.0" onAction="#setMovie" prefHeight="25.0" prefWidth="149.0" promptText="Movie" />
       <Label layoutX="826.0" layoutY="478.0" prefHeight="17.0" prefWidth="40.0" />
    </children>
 </AnchorPane>

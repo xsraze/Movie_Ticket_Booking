@@ -1,5 +1,6 @@
 package com.example.movie_ticket_booking;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +58,10 @@ public class AddSessionController {
 
     private int account;
 
+    private int id_movie;
+    private int id_venue;
+
+
     public void setAccount(int acc) {
         account=acc;
     }
@@ -66,6 +71,59 @@ public class AddSessionController {
         comboRoom.setItems(room);
         comboVenue.setItems(venue);
         comboMovie.setItems(movie);
+    }
+
+    @FXML
+    public void setMovie() {
+        comboMovie.setDisable(true);
+    }
+
+    @FXML
+    public void setVenue() {
+        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        if (!comboVenue.isDisable()) {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN room ON cinema.Id_cinema=room.Id_cinema WHERE cinema.name = "+'"'+comboVenue.getSelectionModel().getSelectedItem()+'"');
+                while (rs3.next()) {
+                    String room = rs3.getString("ID_room");
+                    if (!rs3.wasNull()) {
+                        updatedItems.add(room);
+                    }
+                }
+                comboRoom.setItems(updatedItems);
+                comboVenue.setDisable(true);
+                con.close();
+                stat.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void setRoom() {
+        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        if (!comboRoom.isDisable()) {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN room ON cinema.Id_cinema=room.Id_cinema WHERE room.ID_room = "+comboRoom.getSelectionModel().getSelectedItem());
+                while (rs3.next()) {
+                    String cinema = rs3.getString("cinema.name");
+                    if (!rs3.wasNull()) {
+                        updatedItems.add(cinema);
+                    }
+                }
+                comboVenue.setItems(updatedItems);
+                comboRoom.setDisable(true);
+                con.close();
+                stat.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
 
@@ -201,6 +259,39 @@ public class AddSessionController {
 
         if(!error)
         {
+
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+                while (rs.next())
+                {
+                    if(rs.getString("Name").equals(comboMovie.getSelectionModel().getSelectedItem())){
+                        id_movie=rs.getInt("ID_movie");
+                    }
+                }
+
+            }catch (Exception e1){
+                System.out.println(e1.getMessage());
+            }
+
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM `cinema`");
+
+                while (rs.next())
+                {
+                    if(rs.getString("name").equals(comboVenue.getSelectionModel().getSelectedItem())){
+                        id_venue=rs.getInt("Id_cinema");
+                    }
+                }
+
+            }catch (Exception e1){
+                System.out.println(e1.getMessage());
+            }
+
             String request;
 
             try {
@@ -212,7 +303,7 @@ public class AddSessionController {
 
                 while (rs.next())
                 {
-                    if(txtDate.getText().equals(rs.getString("Date")) && comboVenue.getSelectionModel().getSelectedItem().equals(rs.getString("id_cinema")) && comboRoom.getSelectionModel().getSelectedItem().equals(rs.getString("ID_room")))
+                    if(txtDate.getText().equals(rs.getString("Date")) && id_venue == rs.getInt("id_cinema") && comboRoom.getSelectionModel().getSelectedItem().equals(rs.getString("ID_room")))
                     {
                         ErrDate.setText("This Session already exists");
                         ErrVenue.setText("This Session already exists");
@@ -223,7 +314,7 @@ public class AddSessionController {
 
                 if(!verified)
                 {
-                    request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+comboMovie.getSelectionModel().getSelectedItem()+"', '"+comboVenue.getSelectionModel().getSelectedItem()+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
+                    request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
 
                     stat.executeUpdate(request);
 
@@ -239,7 +330,7 @@ public class AddSessionController {
                 }
 
             } catch (Exception e1) {
-                System.out.println(e1.getMessage());
+                ErrDate.setText("Put Date -> YYYY-MM-DD H:M:S");
             }
         }
     }

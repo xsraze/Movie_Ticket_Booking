@@ -625,7 +625,7 @@ public class HomeController {
             ResultSet rs = stat.executeQuery("SELECT * FROM room");
 
             while (rs.next()) {
-                String room = rs.getString("room_nb");
+                String room = rs.getString("ID_room");
                 items3.add(room);
             }
 
