@@ -583,20 +583,12 @@ public class HomeController {
 
         Connection con = null;
         ResultSet rs = null;
-        ResultSet rs2 = null;
-        ResultSet rs3 = null;
         Statement stat = null;
-        //Statement stat2 = null;
-        //Statement stat3 = null;
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
             stat = con.createStatement();
-            //stat2 = con.createStatement();
-            //stat3 = con.createStatement();
             rs = stat.executeQuery("SELECT * FROM movie");
-            rs2 = stat.executeQuery("SELECT * FROM cinema");
-            rs3 = stat.executeQuery("SELECT * FROM room");
 
             ObservableList<String> items = FXCollections.observableArrayList();
             ObservableList<String> items2 = FXCollections.observableArrayList();
@@ -610,8 +602,8 @@ public class HomeController {
 
             while (rs.next()) {
                 String movie = rs.getString("ID_movie");
-                String cinema = rs2.getString("id_cinema");
-                String room = rs3.getString("ID_room");
+                String cinema = rs.getString("id_cinema");
+                String room = rs.getString("ID_room");
                 items.add(movie);
                 items2.add(cinema);
                 items3.add(room);
