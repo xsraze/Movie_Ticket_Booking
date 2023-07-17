@@ -1,5 +1,6 @@
 package com.example.movie_ticket_booking;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,6 +59,11 @@ public class AddSessionController {
 
     public void setAccount(int acc) {
         account=acc;
+    }
+
+    public void SetCombo(ObservableList<String> venue, ObservableList<String> room, ObservableList<String> movie)
+    {
+
     }
 
 

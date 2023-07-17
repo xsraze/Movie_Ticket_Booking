@@ -1,5 +1,7 @@
 package com.example.movie_ticket_booking;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -16,10 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class HomeController {
 
@@ -582,12 +581,47 @@ public class HomeController {
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("AddSession.fxml"));
-        AnchorPane addsession = fxmlLoader.load();
-        AddSessionController asc = fxmlLoader.getController();
-        asc.setAccount(account);
+        Connection con = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+        Statement stat = null;
+        //Statement stat2 = null;
+        //Statement stat3 = null;
 
-        MovieContainer.add(addsession, 0, 1);
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            stat = con.createStatement();
+            //stat2 = con.createStatement();
+            //stat3 = con.createStatement();
+            rs = stat.executeQuery("SELECT * FROM movie");
+            rs2 = stat.executeQuery("SELECT * FROM cinema");
+            rs3 = stat.executeQuery("SELECT * FROM room");
+
+            ObservableList<String> items = FXCollections.observableArrayList();
+            ObservableList<String> items2 = FXCollections.observableArrayList();
+            ObservableList<String> items3 = FXCollections.observableArrayList();
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("AddSession.fxml"));
+            AnchorPane addsession = fxmlLoader.load();
+            AddSessionController asc = fxmlLoader.getController();
+            asc.setAccount(account);
+
+            while (rs.next()) {
+                String movie = rs.getString("ID_movie");
+                String cinema = rs2.getString("id_cinema");
+                String room = rs3.getString("ID_room");
+                items.add(movie);
+                items2.add(cinema);
+                items3.add(room);
+                asc.SetCombo(items2, items3, items);
+            }
+
+            MovieContainer.add(addsession, 0, 1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
