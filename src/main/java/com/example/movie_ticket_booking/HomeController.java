@@ -560,12 +560,34 @@ public class HomeController {
     }
 
     @FXML
-    void UpdateSession(MouseEvent event) {
+    void UpdateSession(MouseEvent event) throws IOException {
 
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("UpdateSession.fxml"));
+        AnchorPane UpdateSession = fxmlLoader.load();
+        //AddSessionController asc = fxmlLoader.getController();
+        //asc.setAccount(account);
+
+        //MovieContainer.add(addsession, 0, 1);
     }
 
     @FXML
-    void AddSession(MouseEvent event) {
+    void AddSession() throws IOException {
 
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("AddSession.fxml"));
+        AnchorPane addsession = fxmlLoader.load();
+        AddSessionController asc = fxmlLoader.getController();
+        asc.setAccount(account);
+
+        MovieContainer.add(addsession, 0, 1);
     }
 }
