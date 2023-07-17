@@ -38,13 +38,13 @@ public class AddSessionController {
     private Label ErrVenue;
 
     @FXML
-    private ComboBox<?> comboRoom;
+    private ComboBox<String> comboRoom;
 
     @FXML
-    private ComboBox<?> comboVenue;
+    private ComboBox<String> comboVenue;
 
     @FXML
-    private ComboBox<?> comboMovie;
+    private ComboBox<String> comboMovie;
 
     @FXML
     private TextField txtDate;
@@ -63,7 +63,9 @@ public class AddSessionController {
 
     public void SetCombo(ObservableList<String> venue, ObservableList<String> room, ObservableList<String> movie)
     {
-
+        comboRoom.setItems(room);
+        comboVenue.setItems(venue);
+        comboMovie.setItems(movie);
     }
 
 

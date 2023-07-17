@@ -581,39 +581,59 @@ public class HomeController {
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
 
-        Connection con = null;
-        ResultSet rs = null;
-        Statement stat = null;
+        ObservableList<String> items = FXCollections.observableArrayList();
+        ObservableList<String> items2 = FXCollections.observableArrayList();
+        ObservableList<String> items3 = FXCollections.observableArrayList();
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("AddSession.fxml"));
+        AnchorPane addsession = fxmlLoader.load();
+        AddSessionController asc = fxmlLoader.getController();
+        asc.setAccount(account);
 
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-            stat = con.createStatement();
-            rs = stat.executeQuery("SELECT * FROM movie");
-
-            ObservableList<String> items = FXCollections.observableArrayList();
-            ObservableList<String> items2 = FXCollections.observableArrayList();
-            ObservableList<String> items3 = FXCollections.observableArrayList();
-
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("AddSession.fxml"));
-            AnchorPane addsession = fxmlLoader.load();
-            AddSessionController asc = fxmlLoader.getController();
-            asc.setAccount(account);
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie");
 
             while (rs.next()) {
-                String movie = rs.getString("ID_movie");
-                String cinema = rs.getString("id_cinema");
-                String room = rs.getString("ID_room");
+                String movie = rs.getString("Name");
                 items.add(movie);
-                items2.add(cinema);
-                items3.add(room);
-                asc.SetCombo(items2, items3, items);
             }
-
-            MovieContainer.add(addsession, 0, 1);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM cinema");
+
+            while (rs.next()) {
+                String cinema = rs.getString("name");
+                items2.add(cinema);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM room");
+
+            while (rs.next()) {
+                String room = rs.getString("room_nb");
+                items3.add(room);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        asc.SetCombo(items2, items3, items);
+        MovieContainer.add(addsession, 0, 1);
     }
 }
