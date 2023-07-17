@@ -105,7 +105,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
 
                 if(col == 3)
                 {
@@ -186,6 +186,10 @@ public class HomeController {
 
     @FXML
     void Name() {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
         int col = 0;
         int line = 1;
 
@@ -193,8 +197,7 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Name ASC");
-            System.out.println("Hello");
+            ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Review DESC");
 
             while (rs.next())
             {
@@ -202,7 +205,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
 
                 if(col == 3)
                 {
@@ -221,6 +224,10 @@ public class HomeController {
 
     @FXML
     void Year() {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
         int col = 0;
         int line = 1;
 
@@ -237,7 +244,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
 
                 if(col == 3)
                 {
@@ -256,6 +263,10 @@ public class HomeController {
 
     @FXML
     void Genre(MouseEvent event) {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
         int col = 0;
         int line = 1;
 
@@ -272,7 +283,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
 
                 if(col == 3)
                 {
@@ -472,7 +483,7 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie WHERE session.ID_movie=movie.ID_movie");
+            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON session.Id_cinema=cinema.Id_cinema");
 
             while (rs.next())
             {
@@ -480,7 +491,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("SalesSession.fxml"));
                 VBox SalesSessionBox = fxmlLoader.load();
                 SalesSessionController ssc = fxmlLoader.getController();
-                ssc.SetSaleSession(rs.getString("movie.Name"), rs.getString("session.id_cinema"), rs.getString("session.Date"), rs.getString("session.ID_room"),0,0,rs.getString("movie.poster"));
+                ssc.SetSaleSession(rs.getString("movie.Name"), rs.getString("cinema.name"), rs.getString("session.Date"), rs.getString("session.ID_room"),0,0,rs.getString("movie.poster"));
 
                 ++line;
 

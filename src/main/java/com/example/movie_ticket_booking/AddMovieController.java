@@ -113,6 +113,11 @@ public class AddMovieController {
             ErrReview.setText("Put a Review");
             error=true;
         }
+        if(Integer.parseInt(txtReview.getText())>5 || Integer.parseInt(txtReview.getText())<0)
+        {
+            ErrReview.setText("Must be between 0 and 5");
+            error=true;
+        }
 
         if(!error)
         {

@@ -18,10 +18,10 @@ public class MovieController {
     @FXML
     private ImageView poster;
 
-    public void SetMovie(String post, String Gen, String Nam, String Yea){
+    public void SetMovie(String post, String Gen, String Nam, String Yea, String Review){
         poster.setImage(new Image(post));
         Name.setText(Nam);
         Genre.setText(Gen);
-        Year.setText(Yea);
+        Year.setText(Yea + "  |  "+ "Review: " + Review + " ⭐");
     }
 }
