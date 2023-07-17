@@ -55,7 +55,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="545.0" layoutY="428.0" mnemonicParsing="false" text="Book Now">
+      <Button fx:id="sbm_btn" layoutX="545.0" layoutY="428.0" mnemonicParsing="false" onAction="#book_now" text="Book Now">
          <font>
             <Font size="20.0" />
          </font>

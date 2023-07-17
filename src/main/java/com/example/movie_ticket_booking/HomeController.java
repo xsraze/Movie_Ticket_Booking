@@ -169,7 +169,6 @@ public class HomeController {
 
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Name ASC");
-            System.out.println("Hello");
 
             while (rs.next())
             {
@@ -204,7 +203,6 @@ public class HomeController {
 
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Year ASC");
-            System.out.println("Hello");
 
             while (rs.next())
             {
@@ -239,7 +237,6 @@ public class HomeController {
 
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie` ORDER BY Genre ASC");
-            System.out.println("Hello");
 
             while (rs.next())
             {

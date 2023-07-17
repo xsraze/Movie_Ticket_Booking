@@ -4,14 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +26,9 @@ public class BookController {
 
     @FXML
     public ComboBox<String> date_hour;
+
+    @FXML
+    private Button sbm_btn;
 
     @FXML
     private ImageView film_img;
@@ -126,6 +135,11 @@ public class BookController {
     @FXML
     private Button s9;
 
+    public int cpt_tickets = 0;
+    Stage stage;
+    Scene scene;
+
+
     @FXML
     public ComboBox<String> venue_cb;
     public Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -153,7 +167,7 @@ public class BookController {
     public void combo_cinema() {
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
         ObservableList<String> updatedItems2 = FXCollections.observableArrayList();
-        if(!venue_cb.isDisable()){
+        if (!venue_cb.isDisable()) {
             try {
                 ResultSet rs2 = stat2.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND cinema.name='" + selectedCinema + "' ");
                 while (rs2.next()) {
@@ -179,7 +193,7 @@ public class BookController {
         date_hour.setDisable(true);
     }
 
-    public void combo_date(){
+    public void combo_date() {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         ObservableList<String> updatedItems = FXCollections.observableArrayList();
         if (!date_hour.isDisable()) {
@@ -203,6 +217,7 @@ public class BookController {
             setSeatButtons();
         }
     }
+
     public void setSeatButtons() {
         if (date_hour.isDisable() && venue_cb.isDisable()) {
             try {
@@ -244,13 +259,11 @@ public class BookController {
         }
     }
 
-
-
     @FXML
-    public void seats(ActionEvent event){
+    public void seats(ActionEvent event) {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
-        if(date_hour.isDisable()&&venue_cb.isDisable()){
+        if (date_hour.isDisable() && venue_cb.isDisable()) {
             if (selectedDate != null && selectedCinema != null) {
                 try {
                     ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
@@ -260,18 +273,17 @@ public class BookController {
                         Button seatButton = (Button) event.getSource();
                         int seatNumber = Integer.parseInt(seatButton.getText());
 
-                        ResultSet rs5 = stat4.executeQuery("SELECT reserved FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = "+sessionId+") AND Seat_nb = "+seatNumber);
+                        ResultSet rs5 = stat4.executeQuery("SELECT reserved FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND Seat_nb = " + seatNumber);
 
                         if (rs5.next()) {
                             boolean reserved = rs5.getBoolean("reserved");
 
                             if (!reserved) {
 
-                                String request ="UPDATE seats SET reserved = 1 WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = "+sessionId+") AND Seat_nb = "+seatNumber;
+                                String request = "UPDATE seats SET reserved = 1 WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND Seat_nb = " + seatNumber;
                                 stat4.executeUpdate(request);
                                 seatButton.setDisable(true);
-
-                                System.out.println("Place réservée!");
+                                cpt_tickets++;
                             } else {
                                 System.out.println("La place est déjà réservée !");
                             }
@@ -283,6 +295,43 @@ public class BookController {
                     System.out.println(e.getMessage());
                 }
             }
+        }
+    }
+
+    @FXML
+    void book_now(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Payment.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        HomeController hc = fxmlLoader.getController();
+        hc.Initialisation(0);
+
+        stage.setTitle("Payment");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void submit(ActionEvent event) {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("");
+
+            while (rs.next()) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("Payment.fxml"));
+                AnchorPane bookPane = fxmlLoader.load();
+                PaymentController pc = fxmlLoader.getController();
+               // bpane.setCenter(bookPane);
+                pc.setPayment(rs.getString("email"), rs.getString("Card_number"), rs.getString("poster"), rs.getString("Name"), cpt_tickets);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

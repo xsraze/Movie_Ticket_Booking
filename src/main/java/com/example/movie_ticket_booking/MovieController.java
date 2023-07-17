@@ -77,9 +77,7 @@ public class MovieController {
 
                 if (rs.next()) {
                     int id = rs.getInt("Id_movie");
-                    //System.out.println(id);
                     Id_movie_on_click = id;
-                    System.out.println(Id_movie_on_click);
                 } else {
                     System.out.println("Film non trouvé.");
                 }
