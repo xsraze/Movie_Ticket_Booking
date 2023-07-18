@@ -419,7 +419,33 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM `cinema`");
+            ResultSet rs = stat.executeQuery("SELECT cinema.name, SUM(reservation.Nb_tickets) AS NombrePlacesVendues, SUM(reservation.FinalPrice) AS RevenusGeneres FROM cinema JOIN session ON cinema.Id_cinema = session.Id_cinema JOIN reservation ON session.ID_session = reservation.ID_session GROUP BY cinema.name");
+
+            while (rs.next())
+            {
+                int price=rs.getInt("RevenusGeneres");
+                int seat=rs.getInt("NombrePlacesVendues");
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesCinema.fxml"));
+                VBox SalesCinema = fxmlLoader.load();
+                SalesCinemaController scc = fxmlLoader.getController();
+                scc.setSalesMovie(rs.getString("name"), price, seat);
+
+                ++line;
+
+                MovieContainer.add(SalesCinema, 0, line);
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT cinema.name FROM cinema WHERE NOT EXISTS ( SELECT 1 FROM session INNER JOIN reservation ON session.ID_session = reservation.ID_session WHERE cinema.Id_cinema = session.Id_cinema )");
 
             while (rs.next())
             {

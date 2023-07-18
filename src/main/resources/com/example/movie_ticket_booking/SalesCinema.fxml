@@ -31,12 +31,12 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtPlaces" alignment="CENTER" layoutX="633.0" layoutY="50.0" prefHeight="28.0" prefWidth="83.0" textFill="WHITE">
+            <Label fx:id="txtPlaces" layoutX="569.0" layoutY="50.0" prefHeight="28.0" prefWidth="159.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtIncome" alignment="CENTER" layoutX="633.0" layoutY="120.0" prefHeight="28.0" prefWidth="83.0" textFill="WHITE">
+            <Label fx:id="txtIncome" layoutX="569.0" layoutY="122.0" prefHeight="28.0" prefWidth="159.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>

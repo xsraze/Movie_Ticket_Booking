@@ -18,8 +18,8 @@ public class SalesCinemaController {
     public void setSalesMovie(String name,int income, int place)
     {
         txtName.setText(name);
-        txtPlaces.setText(String.valueOf(place));
-        txtIncome.setText(String.valueOf(income));
+        txtPlaces.setText(place + " seats");
+        txtIncome.setText("£ " + income);
     }
 
 }

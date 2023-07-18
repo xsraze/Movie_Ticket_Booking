@@ -62,17 +62,17 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtPlaces" alignment="CENTER" layoutX="585.0" layoutY="57.0" prefHeight="28.0" prefWidth="51.0" textFill="WHITE">
+            <Label fx:id="txtPlaces" layoutX="559.0" layoutY="57.0" prefHeight="28.0" prefWidth="167.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="txtIncome" alignment="CENTER" layoutX="585.0" layoutY="99.0" prefHeight="28.0" prefWidth="51.0" textFill="WHITE">
+            <Label fx:id="txtIncome" layoutX="559.0" layoutY="102.0" prefHeight="28.0" prefWidth="167.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgPoster" fitHeight="168.0" fitWidth="132.0" layoutX="666.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgPoster" fitHeight="168.0" fitWidth="132.0" layoutX="716.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="txtYear1" alignment="CENTER" layoutX="149.0" layoutY="116.0" prefHeight="28.0" prefWidth="260.0" textFill="WHITE">
                <font>
                   <Font size="19.0" />

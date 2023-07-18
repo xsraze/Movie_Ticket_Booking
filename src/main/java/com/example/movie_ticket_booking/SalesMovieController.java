@@ -34,8 +34,8 @@ public class SalesMovieController {
         txtGenre.setText(genre);
         txtRealisator.setText(Realisator);
         txtYear.setText(String.valueOf(year));
-        txtIncome.setText(String.valueOf(incom));
-        txtPlaces.setText(String.valueOf(place));
+        txtIncome.setText("£ "+ incom);
+        txtPlaces.setText(place+ " seats");
         imgPoster.setImage(new Image(poster));
     }
 
