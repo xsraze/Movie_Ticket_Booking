@@ -37,13 +37,14 @@ public class PaymentController {
     @FXML
     private Label titre_movie;
 
+
+
     public void setPayment(String email2, String cb2, String post, String title, int nb_tick){
         email.setText(email2);
         cb.setText(cb2);
         poster.setImage(new Image(post));
         titre_movie.setText(title);
         nb_tickets.setText(""+nb_tick);
-
     }
 }
 

@@ -136,9 +136,8 @@ public class BookController {
     private Button s9;
 
     public int cpt_tickets = 0;
-    Stage stage;
-    Scene scene;
 
+    private int sessionId;
 
     @FXML
     public ComboBox<String> venue_cb;
@@ -149,11 +148,14 @@ public class BookController {
     public Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
     public Statement stat2 = con2.createStatement();
 
+    private int account;
+
     public BookController() throws SQLException {
     }
 
 
-    public void setBook(String post, String nom, ObservableList items, ObservableList items2) throws SQLException {
+    public void setBook(String post, String nom, ObservableList items, ObservableList items2, int account) throws SQLException {
+        this.account=account;
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
         venue_cb.setItems(items);
@@ -269,7 +271,7 @@ public class BookController {
                     ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
 
                     if (rs4.next()) {
-                        int sessionId = rs4.getInt("ID_session");
+                        sessionId = rs4.getInt("ID_session");
                         Button seatButton = (Button) event.getSource();
                         int seatNumber = Integer.parseInt(seatButton.getText());
 
@@ -297,41 +299,27 @@ public class BookController {
             }
         }
     }
-
     @FXML
-    void book_now(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Payment.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        HomeController hc = fxmlLoader.getController();
-        hc.Initialisation(0);
+    void book_now(ActionEvent event) throws IOException, SQLException {
+        FXMLLoader fxmlLoader2 = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+        Scene scene = new Scene(fxmlLoader2.load());
 
-        stage.setTitle("Payment");
-        stage.setScene(scene);
-        stage.show();
-    }
+        HomeController hc = fxmlLoader2.getController();
+        hc.Initialisation(account);
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+        Statement stat = con.createStatement();
+        ResultSet rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie WHERE session.ID_session='"+sessionId+"'");
 
-    @FXML
-    void submit(ActionEvent event) {
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+        if (rs.next()) {
+            hc.payment(sessionId, rs.getString("ID_movie"),cpt_tickets);
 
-            Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("");
-
-            while (rs.next()) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("Payment.fxml"));
-                AnchorPane bookPane = fxmlLoader.load();
-                PaymentController pc = fxmlLoader.getController();
-               // bpane.setCenter(bookPane);
-                pc.setPayment(rs.getString("email"), rs.getString("Card_number"), rs.getString("poster"), rs.getString("Name"), cpt_tickets);
-
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+            System.out.println("Aucun résultat trouvé pour la session ID " + sessionId);
         }
+
+        rs.close();
+        stat.close();
+        con.close();
     }
+
 }

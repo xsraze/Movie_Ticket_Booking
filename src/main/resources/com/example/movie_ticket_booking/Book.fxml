@@ -62,7 +62,7 @@
       </Button>
       <ComboBox fx:id="date_hour" layoutX="423.0" layoutY="162.0" onAction="#combo_date" prefHeight="25.0" prefWidth="374.0" promptText="Select a date and an hour" />
       <Button fx:id="s29" layoutX="609.0" layoutY="388.0" mnemonicParsing="false" onAction="#seats" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: #811902;" text="29" textFill="TRANSPARENT" />
-      <Button fx:id="lock_venue" layoutX="759.0" layoutY="37.0" mnemonicParsing="false" onAction="#lock_cinema" onMousePressed="#lock_cinema" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparant;" />
-      <Button fx:id="lock_hour" layoutX="754.0" layoutY="76.0" mnemonicParsing="false" onAction="#lock_date" onMousePressed="#lock_date" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparant;" />
+      <Button fx:id="lock_venue" layoutX="759.0" layoutY="37.0" mnemonicParsing="false" onAction="#lock_cinema" onMousePressed="#lock_cinema" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="lock_hour" layoutX="754.0" layoutY="76.0" mnemonicParsing="false" onAction="#lock_date" onMousePressed="#lock_date" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: transparent;" />
    </children>
 </AnchorPane>

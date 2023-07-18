@@ -14,11 +14,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 
 import java.io.IOException;
 import java.sql.*;
@@ -34,16 +32,16 @@ public class HomeController {
     }
 
     @FXML
-    private ComboBox<?> combo_date;
+    private ComboBox<String> combo_date;
 
     @FXML
-    private ComboBox<?> combo_movie;
+    private ComboBox<String> combo_movie;
 
     @FXML
-    private ComboBox<?> combo_seat;
+    private ComboBox<String> combo_seat;
 
     @FXML
-    private ComboBox<?> combo_venue;
+    private ComboBox<String> combo_venue;
 
     @FXML
     private Button login_btn;
@@ -67,6 +65,7 @@ public class HomeController {
     private Button signin_btn;
     @FXML
     private GridPane MovieContainer;
+    public int price_tick;
 
     public void Initialisation(int acc) {
         account = acc;
@@ -84,7 +83,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), account);
                 if (col == 3) {
                     col = 0;
                     ++line;
@@ -130,6 +129,8 @@ public class HomeController {
             FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
             AnchorPane bookPane = fxmlLoaderBook.load();
             BookController bc = fxmlLoaderBook.getController();
+
+
             bpane.setCenter(bookPane);
 
             ObservableList<String> items = FXCollections.observableArrayList();
@@ -140,12 +141,67 @@ public class HomeController {
                 String date = rs.getString("Date");
                 items.add(cinema);
                 items2.add(date);
-                bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2);
+                bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account);
             }
+            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+    public void payment(int id_session, String id_movie, int cpt) {
+        StackPane stackPane = new StackPane();
+
+        if (account == 0) {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs2 = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie = movie.ID_movie WHERE session.ID_session = " + id_session + " AND session.ID_movie=" + id_movie + "");
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Payment.fxml"));
+                AnchorPane paymentPane = fxmlLoader.load();
+
+                PaymentController pc = fxmlLoader.getController();
+                bpane.setCenter(null);
+                bpane.setCenter(paymentPane);
+
+                System.out.println("okok");
+
+                while (rs2.next()) {
+                    price_tick = rs2.getInt("Price");
+                    pc.setPayment("", "", rs2.getString("poster"), rs2.getString("Name"), cpt);
+                }
+                con.close();
+
+            } catch (SQLException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (account != 0) {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM users");
+                ResultSet rs2 = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie = movie.ID_movie WHERE session.ID_session = " + id_session + " AND session.ID_movie=" + id_movie + "");
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Payment.fxml"));
+                AnchorPane paymentPane = fxmlLoader.load();
+
+                PaymentController pc = fxmlLoader.getController();
+                bpane.setCenter(paymentPane);
+                System.out.println("good");
+
+                while (rs2.next()) {
+                    price_tick = rs2.getInt("Price");
+                    pc.setPayment(rs.getString("email"), "", rs2.getString("poster"), rs2.getString("Name"), cpt);
+                }
+                con.close();
+
+            } catch (SQLException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     @FXML
     void Home(MouseEvent event) throws IOException {
@@ -176,7 +232,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), account);
 
                 if(col == 3)
                 {
@@ -210,7 +266,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), account);
 
                 if(col == 3)
                 {
@@ -244,7 +300,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
-                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"));
+                mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), account);
 
                 if(col == 3)
                 {

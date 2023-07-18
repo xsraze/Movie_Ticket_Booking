@@ -31,14 +31,16 @@ public class MovieController {
 
     public int Id_movie_on_click;
     private static final double BRIGHTNESS_DELTA = -0.4;
+    private int account;
 
-    public void SetMovie(String post, String Gen, String Nam, String Yea) throws IOException, SQLException {
+    public void SetMovie(String post, String Gen, String Nam, String Yea, int acc) throws IOException, SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
         Statement stat = con.createStatement();
 
         ColorAdjust colorAdjust = new ColorAdjust();
         poster.setEffect(colorAdjust);
 
+        this.account=acc;
         poster.setImage(new Image(post));
         Name.setText(Nam);
         Genre.setText(Gen);
@@ -60,6 +62,7 @@ public class MovieController {
             }
             Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
             HomeController hc = fxmlLoader.getController();
+            hc.Initialisation(account);
             try {
                 hc.Initialisation2(Name.getText());
             } catch (IOException e) {
