@@ -447,27 +447,54 @@ public class HomeController {
 
         int line = 1;
 
-        try {
+        try{
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+            ResultSet rs = stat.executeQuery("SELECT movie.ID_movie, movie.Name, movie.Author, movie.Year, movie.Genre, movie.poster, SUM(FinalPrice) AS SommePrice, SUM(Nb_tickets) AS SommeTicket FROM reservation JOIN session ON reservation.ID_session=session.ID_session JOIN cinema ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie GROUP BY movie.Name");
 
-            while (rs.next())
+            while(rs.next())
+            {
+                int price=rs.getInt("SommePrice");
+                int seat=rs.getInt("SommeTicket");
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesMovie.fxml"));
+                VBox SalesMovieBox = fxmlLoader.load();
+                SalesMovieController smc = fxmlLoader.getController();
+                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("movie.Genre"),seat,price,rs.getString("movie.poster"));
+                ++line;
+
+                MovieContainer.add(SalesMovieBox, 0, line);
+            }
+
+            con.close();
+        }catch (Exception e)
+        {
+            System.out.println("mouais");
+        }
+
+        try{
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie WHERE movie.ID_movie NOT IN ( SELECT DISTINCT session.ID_movie FROM session INNER JOIN reservation ON session.ID_session = reservation.ID_session )");
+
+            while(rs.next())
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("SalesMovie.fxml"));
                 VBox SalesMovieBox = fxmlLoader.load();
                 SalesMovieController smc = fxmlLoader.getController();
-                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("movie.Genre"),0,0,rs.getString("movie.poster"));
+                smc.setSalesMovie(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getInt("movie.Year"), rs.getString("Movie.Genre"),0,0,rs.getString("movie.poster"));
 
                 ++line;
 
                 MovieContainer.add(SalesMovieBox, 0, line);
             }
+
             con.close();
-        } catch (Exception e1) {
-            System.out.println(e1.getMessage());
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -479,13 +506,39 @@ public class HomeController {
 
         int line = 1;
 
-        try {
+        try{
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON session.Id_cinema=cinema.Id_cinema");
+            ResultSet rs = stat.executeQuery("SELECT reservation.ID_session, movie.Name, cinema.name, session.Date, session.ID_room, movie.poster, SUM(FinalPrice) AS SommePrice, SUM(Nb_tickets) AS SommeTicket FROM reservation JOIN session ON reservation.ID_session=session.ID_session JOIN cinema ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie GROUP BY movie.Name, cinema.name, session.Date, session.ID_room, movie.poster");
 
-            while (rs.next())
+            while(rs.next())
+            {
+                int price=rs.getInt("SommePrice");
+                int seat=rs.getInt("SommeTicket");
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("SalesSession.fxml"));
+                VBox SalesSessionBox = fxmlLoader.load();
+                SalesSessionController ssc = fxmlLoader.getController();
+                ssc.SetSaleSession(rs.getString("movie.Name"), rs.getString("cinema.name"), rs.getString("session.Date"), rs.getString("session.ID_room"),seat,price,rs.getString("movie.poster"));
+
+                ++line;
+
+                MovieContainer.add(SalesSessionBox, 0, line);
+            }
+
+            con.close();
+        }catch (Exception e)
+        {
+            System.out.println("mouais");
+        }
+
+        try{
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT session.ID_session, movie.Name, cinema.name, session.Date, session.ID_room, movie.poster FROM session LEFT JOIN reservation ON session.ID_session = reservation.ID_session JOIN cinema ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie WHERE reservation.ID_session IS NULL");
+
+            while(rs.next())
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("SalesSession.fxml"));
@@ -497,9 +550,11 @@ public class HomeController {
 
                 MovieContainer.add(SalesSessionBox, 0, line);
             }
+
             con.close();
-        } catch (Exception e1) {
-            System.out.println(e1.getMessage());
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 

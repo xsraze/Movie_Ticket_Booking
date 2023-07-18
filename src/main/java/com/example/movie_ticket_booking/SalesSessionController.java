@@ -32,8 +32,8 @@ public class SalesSessionController {
         txtMovie.setText(movie);
         txtVenue.setText(cinema);
         txtRoom.setText(room);
-        txtIncome.setText(String.valueOf(income));
-        txtPlaces.setText(String.valueOf(place));
+        txtIncome.setText("£ " + income);
+        txtPlaces.setText(place + " seats");
         imgPoster.setImage(new Image(poster));
     }
 }
