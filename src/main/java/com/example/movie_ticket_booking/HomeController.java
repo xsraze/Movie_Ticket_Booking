@@ -8,10 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -20,6 +17,8 @@ import javafx.scene.Parent;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class HomeController {
 
@@ -66,6 +65,11 @@ public class HomeController {
     @FXML
     private GridPane MovieContainer;
     public int price_tick;
+    public int discount;
+    private String poster;
+    private String name;
+    private String email;
+    private int id_room;
 
     public void Initialisation(int acc) {
         account = acc;
@@ -117,6 +121,10 @@ public class HomeController {
     }
 
     public void Initialisation2(String name) throws IOException {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
+
         Connection con = null;
         ResultSet rs = null;
         Statement stat = null;
@@ -130,26 +138,33 @@ public class HomeController {
             AnchorPane bookPane = fxmlLoaderBook.load();
             BookController bc = fxmlLoaderBook.getController();
 
-
-            bpane.setCenter(bookPane);
+            Set<String> uniqueCinemas = new HashSet<>();
 
             ObservableList<String> items = FXCollections.observableArrayList();
             ObservableList<String> items2 = FXCollections.observableArrayList();
 
             while (rs.next()) {
                 String cinema = rs.getString("cinema.name");
-                String date = rs.getString("Date");
-                items.add(cinema);
-                items2.add(date);
-                bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account);
+                if (!uniqueCinemas.contains(cinema)) {
+                    uniqueCinemas.add(cinema);
+                    String date = rs.getString("Date");
+                    items.add(cinema);
+                    items2.add(date);
+                    bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account);
+                }
             }
+
+            MovieContainer.add(bookPane, 0, 1);
             con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void payment(int id_session, String id_movie, int cpt) {
-        StackPane stackPane = new StackPane();
+
+    public void payment(int id_session, String id_movie, int cpt, int[] tab) {
+        MovieContainer.getChildren().clear();
+        MovieContainer.getColumnConstraints().clear();
+        MovieContainer.getRowConstraints().clear();
 
         if (account == 0) {
             try {
@@ -161,39 +176,53 @@ public class HomeController {
                 AnchorPane paymentPane = fxmlLoader.load();
 
                 PaymentController pc = fxmlLoader.getController();
-                bpane.setCenter(null);
-                bpane.setCenter(paymentPane);
-
-                System.out.println("okok");
+                MovieContainer.add(paymentPane, 0, 1);
 
                 while (rs2.next()) {
                     price_tick = rs2.getInt("Price");
-                    pc.setPayment("", "", rs2.getString("poster"), rs2.getString("Name"), cpt);
+                    discount = rs2.getInt("Discount");
+                    id_room = rs2.getInt("ID_room");
+                    pc.setPayment(null, "", rs2.getString("poster"), rs2.getString("Name"), cpt, price_tick, discount, id_session, tab, id_room);
                 }
                 con.close();
 
-            } catch (SQLException | IOException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
         if (account != 0) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
-                ResultSet rs = stat.executeQuery("SELECT * FROM users");
                 ResultSet rs2 = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie = movie.ID_movie WHERE session.ID_session = " + id_session + " AND session.ID_movie=" + id_movie + "");
+
+                while (rs2.next()) {
+                    price_tick = rs2.getInt("Price");
+                    discount = rs2.getInt("Discount");
+                    poster = rs2.getString("poster");
+                    name = rs2.getString("Name");
+                    id_room = rs2.getInt("ID_room");
+
+                }
+                con.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM users WHERE users.ID_user='"+account+"'");
 
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Payment.fxml"));
                 AnchorPane paymentPane = fxmlLoader.load();
 
-                PaymentController pc = fxmlLoader.getController();
-                bpane.setCenter(paymentPane);
-                System.out.println("good");
-
-                while (rs2.next()) {
-                    price_tick = rs2.getInt("Price");
-                    pc.setPayment(rs.getString("email"), "", rs2.getString("poster"), rs2.getString("Name"), cpt);
+                while (rs.next()) {
+                    email = rs.getString("email");
                 }
+                PaymentController pc = fxmlLoader.getController();
+                pc.setPayment(email,"",poster,name,cpt,price_tick,discount,id_session,tab,id_room);
+                MovieContainer.add(paymentPane, 0, 1);
                 con.close();
 
             } catch (SQLException | IOException e) {
@@ -201,6 +230,7 @@ public class HomeController {
             }
         }
     }
+
 
 
     @FXML

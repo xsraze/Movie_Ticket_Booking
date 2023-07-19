@@ -13,8 +13,8 @@
 <AnchorPane prefHeight="466.0" prefWidth="825.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.PaymentController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#feffff" height="140.0" layoutX="50.0" layoutY="192.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="383.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#202122" height="467.0" layoutX="480.0" stroke="BLACK" strokeType="INSIDE" width="353.0" />
-      <Line endY="443.0" layoutX="480.0" layoutY="18.0" startX="3.0517578125E-5" startY="-14.0" stroke="WHITE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#202122" height="492.0" layoutX="478.0" stroke="BLACK" strokeType="INSIDE" width="398.0" />
+      <Line endX="3.0517578125E-5" endY="473.3333435058594" layoutX="480.0" layoutY="18.0" startX="3.0517578125E-5" startY="-14.0" stroke="WHITE" />
       <ImageView fx:id="logo" fitHeight="180.0" fitWidth="252.0" layoutX="126.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1130245534448365628/image_2023-07-16_220448917-removebg-preview.png" />
@@ -32,7 +32,7 @@
          </font>
       </Label>
       <TextField fx:id="cb" layoutX="183.0" layoutY="274.0" prefHeight="25.0" prefWidth="221.0" promptText="Enter your card number" />
-      <Button layoutX="214.0" layoutY="372.0" mnemonicParsing="false" text="Pay">
+      <Button fx:id="pay_button" layoutX="214.0" layoutY="372.0" mnemonicParsing="false" onAction="#pay" text="Pay">
          <font>
             <Font size="19.0" />
          </font>
@@ -43,18 +43,18 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="670.0" layoutY="94.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
+      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="696.0" layoutY="95.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
       <Label layoutX="593.0" layoutY="127.0" text="Ticket for " textFill="#fdf7f7" />
       <Label fx:id="titre_movie" layoutX="594.0" layoutY="156.0" prefHeight="17.0" prefWidth="153.0" textFill="WHITE" />
       <Label layoutX="594.0" layoutY="180.0" text="x" textFill="#f6f1f1" />
       <Label fx:id="nb_tickets" layoutX="602.0" layoutY="181.0" prefHeight="17.0" prefWidth="39.0" textFill="WHITE" />
       <Label fx:id="subtotal1" layoutX="769.0" layoutY="164.0" prefHeight="17.0" prefWidth="47.0" textFill="WHITE" />
-      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="668.0" layoutY="233.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
+      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="696.0" layoutY="232.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
       <Label layoutX="506.0" layoutY="253.0" text="Subtotal" textFill="#fdf7f7" />
       <Label fx:id="subtotal2" layoutX="764.0" layoutY="253.0" prefHeight="17.0" prefWidth="47.0" textFill="WHITE" />
       <Label layoutX="506.0" layoutY="284.0" prefHeight="17.0" prefWidth="55.0" text="Discount" textFill="#fdf7f7" />
       <Label fx:id="discount" layoutX="764.0" layoutY="284.0" prefHeight="17.0" prefWidth="47.0" textFill="WHITE" />
-      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="668.0" layoutY="327.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
+      <Line endX="145.33331298828125" endY="-7.62939453125E-6" layoutX="694.0" layoutY="332.0" startX="-168.66668701171875" startY="-7.62939453125E-6" stroke="#6e6d6d" />
       <Label layoutX="548.0" layoutY="354.0" text="Total" textFill="WHITE">
          <font>
             <Font size="22.0" />

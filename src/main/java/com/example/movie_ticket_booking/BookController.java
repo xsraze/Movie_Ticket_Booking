@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,7 +20,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BookController {
@@ -141,18 +144,9 @@ public class BookController {
 
     @FXML
     public ComboBox<String> venue_cb;
-    public Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-    public Statement stat4 = con4.createStatement();
-    public Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-    public Statement stat3 = con3.createStatement();
-    public Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-    public Statement stat2 = con2.createStatement();
 
     private int account;
-
-    public BookController() throws SQLException {
-    }
-
+    private int[] tab = new int[30];
 
     public void setBook(String post, String nom, ObservableList items, ObservableList items2, int account) throws SQLException {
         this.account=account;
@@ -171,6 +165,8 @@ public class BookController {
         ObservableList<String> updatedItems2 = FXCollections.observableArrayList();
         if (!venue_cb.isDisable()) {
             try {
+                Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat2 = con2.createStatement();
                 ResultSet rs2 = stat2.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND cinema.name='" + selectedCinema + "' ");
                 while (rs2.next()) {
                     String date = rs2.getString("Date");
@@ -197,28 +193,36 @@ public class BookController {
 
     public void combo_date() {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
-        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        Set<String> uniqueCinemas = new HashSet<>();
+
         if (!date_hour.isDisable()) {
             try {
+                Connection con3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat3 = con3.createStatement();
                 ResultSet rs3 = stat3.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND session.date='" + selectedDate + "' ");
+
                 while (rs3.next()) {
                     String cinema = rs3.getString("cinema.name");
                     if (!rs3.wasNull()) {
-                        updatedItems.add(cinema);
+                        uniqueCinemas.add(cinema);
                     }
                 }
-                venue_cb.setItems(updatedItems);
+
+                venue_cb.setItems(FXCollections.observableArrayList(uniqueCinemas));
                 lock_date();
+
                 con3.close();
                 stat3.close();
             } catch (Exception e) {
-                System.out.println("zizi");
+                System.out.println(e.getMessage());
             }
         }
+
         if (date_hour.isDisable() && venue_cb.isDisable()) {
             setSeatButtons();
         }
     }
+
 
     public void setSeatButtons() {
         if (date_hour.isDisable() && venue_cb.isDisable()) {
@@ -226,27 +230,28 @@ public class BookController {
                 String selectedDate = date_hour.getSelectionModel().getSelectedItem();
                 String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
 
-                ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
+                Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat4 = con4.createStatement();
+                ResultSet rs4 = stat4.executeQuery("SELECT ID_session, ID_room, seat_1, seat_2, seat_3, seat_4, seat_5, seat_6, seat_7, seat_8, seat_9, seat_10, seat_11, seat_12, seat_13, seat_14, seat_15, seat_16, seat_17, seat_18, seat_19, seat_20, seat_21, seat_22, seat_23, seat_24, seat_25, seat_26, seat_27, seat_28, seat_29, seat_30 FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
 
                 if (rs4.next()) {
-                    int sessionId = rs4.getInt("ID_session");
+                    sessionId = rs4.getInt("ID_session");
+                    int roomId = rs4.getInt("ID_room");
 
-                    ResultSet rs5 = stat4.executeQuery("SELECT Seat_nb FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND reserved = 1");
-
-                    Set<Integer> reservedSeats = new HashSet<>();
-
-                    while (rs5.next()) {
-                        int seatNumber = rs5.getInt("Seat_nb");
-                        reservedSeats.add(seatNumber);
-                    }
-
-                    rs5.close();
+                    List<Integer> reservedSeats = new ArrayList<>();
 
                     for (int seatNumber = 1; seatNumber <= 30; seatNumber++) {
+                        String seatColumnName = "seat_" + seatNumber;
+                        int seatValue = rs4.getInt(seatColumnName);
+
+                        if (seatValue == 1) {
+                            reservedSeats.add(seatNumber);
+                        }
+
                         String seatButtonId = "s" + seatNumber;
                         Button seatButton = (Button) getClass().getDeclaredField(seatButtonId).get(this);
 
-                        if (reservedSeats.contains(seatNumber)) {
+                        if (seatValue == 1) {
                             seatButton.setDisable(true);
                         } else {
                             seatButton.setDisable(false);
@@ -265,32 +270,27 @@ public class BookController {
     public void seats(ActionEvent event) {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
+
         if (date_hour.isDisable() && venue_cb.isDisable()) {
             if (selectedDate != null && selectedCinema != null) {
                 try {
-                    ResultSet rs4 = stat4.executeQuery("SELECT ID_session FROM session JOIN cinema ON session.Id_cinema = cinema.Id_cinema WHERE session.date = '" + selectedDate + "' AND cinema.name = '" + selectedCinema + "'");
+                    Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                    Statement stat4 = con4.createStatement();
+                    ResultSet rs4 = stat4.executeQuery("SELECT * FROM session WHERE Date = '" + selectedDate + "' AND Id_cinema = (SELECT Id_cinema FROM cinema WHERE Name = '" + selectedCinema + "')");
 
                     if (rs4.next()) {
-                        sessionId = rs4.getInt("ID_session");
+                        int sessionId = rs4.getInt("ID_session");
                         Button seatButton = (Button) event.getSource();
                         int seatNumber = Integer.parseInt(seatButton.getText());
 
-                        ResultSet rs5 = stat4.executeQuery("SELECT reserved FROM seats WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND Seat_nb = " + seatNumber);
-
-                        if (rs5.next()) {
-                            boolean reserved = rs5.getBoolean("reserved");
-
-                            if (!reserved) {
-
-                                String request = "UPDATE seats SET reserved = 1 WHERE Id_room = (SELECT Id_room FROM session WHERE ID_session = " + sessionId + ") AND Seat_nb = " + seatNumber;
-                                stat4.executeUpdate(request);
-                                seatButton.setDisable(true);
-                                cpt_tickets++;
-                            } else {
-                                System.out.println("La place est déjà réservée !");
-                            }
+                        for (int i = 0; i < 30; i++) {
+                            if(i==seatNumber-1 || rs4.getInt("seat_"+(i+1))==1)
+                                tab[i] = 1;
                         }
-                        rs5.close();
+
+                        seatButton.setDisable(true);
+                        cpt_tickets++;
+
                     }
                     rs4.close();
                 } catch (SQLException e) {
@@ -299,27 +299,30 @@ public class BookController {
             }
         }
     }
+
     @FXML
     void book_now(ActionEvent event) throws IOException, SQLException {
-        FXMLLoader fxmlLoader2 = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
-        Scene scene = new Scene(fxmlLoader2.load());
-
-        HomeController hc = fxmlLoader2.getController();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+        HomeController hc = fxmlLoader.getController();
         hc.Initialisation(account);
+
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
         Statement stat = con.createStatement();
         ResultSet rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie WHERE session.ID_session='"+sessionId+"'");
 
-        if (rs.next()) {
-            hc.payment(sessionId, rs.getString("ID_movie"),cpt_tickets);
-
-        } else {
-            System.out.println("Aucun résultat trouvé pour la session ID " + sessionId);
+        while (rs.next()) {
+            hc.payment(sessionId, rs.getString("ID_movie"),cpt_tickets,tab);
         }
 
         rs.close();
         stat.close();
         con.close();
+
+        Scene scene = new Scene(root);
+        lstage.setScene(scene);
+        lstage.show();
     }
 
 }
