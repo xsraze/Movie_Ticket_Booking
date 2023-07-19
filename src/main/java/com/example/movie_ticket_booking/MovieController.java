@@ -33,7 +33,7 @@ public class MovieController {
     private static final double BRIGHTNESS_DELTA = -0.4;
     private int account;
 
-    public void SetMovie(String post, String Gen, String Nam, String Yea, int acc) throws IOException, SQLException {
+    public void SetMovie(String post, String Gen, String Nam, String Yea, int acc, String review) throws IOException, SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
         Statement stat = con.createStatement();
 
@@ -44,7 +44,7 @@ public class MovieController {
         poster.setImage(new Image(post));
         Name.setText(Nam);
         Genre.setText(Gen);
-        Year.setText(Yea);
+        Year.setText(Yea + "  |  "+ "Review: " + review + " ⭐");
 
         poster.setOnMouseEntered(mouseEvent -> {
             colorAdjust.setBrightness(BRIGHTNESS_DELTA);
