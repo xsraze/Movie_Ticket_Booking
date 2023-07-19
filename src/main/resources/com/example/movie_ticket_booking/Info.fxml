@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.InfoController">
+    <children>
+        <Label fx:id="txtWelcome" alignment="CENTER" layoutX="342.0" layoutY="14.0" text="Welcome" textFill="WHITE">
+            <font>
+                <Font size="34.0" />
+            </font>
+        </Label>
+        <Label layoutX="272.0" layoutY="123.0" text="Name" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="272.0" layoutY="160.0" text="Last Name" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="271.0" layoutY="197.0" text="Email" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="270.0" layoutY="233.0" text="Phone" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="270.0" layoutY="270.0" text="Username" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="270.0" layoutY="307.0" text="Password" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label layoutX="270.0" layoutY="344.0" text="Type" textFill="WHITE">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+      <Label fx:id="txtName" layoutX="466.0" layoutY="123.0" text="Name" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtLastName" layoutX="466.0" layoutY="160.0" text="Last Name" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtEmail" layoutX="465.0" layoutY="197.0" text="Email" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtPhone" layoutX="464.0" layoutY="233.0" text="Phone" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtUsername" layoutX="464.0" layoutY="270.0" text="Username" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtPassword" layoutX="464.0" layoutY="307.0" text="Password" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtType" layoutX="464.0" layoutY="344.0" text="Type" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
