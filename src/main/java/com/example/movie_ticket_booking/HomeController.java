@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -26,31 +25,19 @@ public class HomeController {
     @FXML
     private BorderPane bpane;
     @FXML
-    private ComboBox<?> combo_date;
+    private ComboBox<String> combo_date;
 
     @FXML
-    private ComboBox<?> combo_movie;
+    private ComboBox<String>  combo_movie;
 
     @FXML
-    private ComboBox<?> combo_seat;
+    private ComboBox<String> combo_seat;
 
     @FXML
-    private ComboBox<?> combo_venue;
+    private ComboBox<String> combo_venue;
 
     @FXML
     private Button login_btn;
-
-    @FXML
-    private ImageView logo;
-
-    @FXML
-    private ImageView logo1;
-
-    @FXML
-    private ScrollPane scroll;
-
-    @FXML
-    private Button search_qb;
 
     @FXML
     private TextField searchbar;
@@ -97,7 +84,6 @@ public class HomeController {
 
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
-            System.out.println("Hello");
 
             while (rs.next())
             {
@@ -262,7 +248,7 @@ public class HomeController {
     }
 
     @FXML
-    void Genre(MouseEvent event) {
+    void Genre() {
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -326,7 +312,7 @@ public class HomeController {
     }
 
     @FXML
-    void Signin(MouseEvent event) throws IOException {
+    void Signin() throws IOException {
         if(signin_btn.getText().equals("Sign in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -338,7 +324,7 @@ public class HomeController {
     }
 
     @FXML
-    void profile(MouseEvent event) throws IOException {
+    void profile() throws IOException {
         if(login_btn.getText().equals("Log in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -392,7 +378,7 @@ public class HomeController {
     }
 
     @FXML
-    void MovieAnalyzed(MouseEvent event) throws IOException {
+    void MovieAnalyzed() throws IOException {
 
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
@@ -408,7 +394,7 @@ public class HomeController {
     }
 
     @FXML
-    void SalesCinema(MouseEvent event) {
+    void SalesCinema() {
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -466,7 +452,7 @@ public class HomeController {
     }
 
     @FXML
-    void SalesMovie(MouseEvent event) {
+    void SalesMovie() {
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -525,7 +511,7 @@ public class HomeController {
     }
 
     @FXML
-    void SalesSession(MouseEvent event) {
+    void SalesSession() {
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -651,7 +637,7 @@ public class HomeController {
     }
 
     @FXML
-    void UpdateSession() throws IOException {
+    void UpdateSession() {
 
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
@@ -744,5 +730,91 @@ public class HomeController {
 
         asc.SetCombo(items2, items3, items);
         MovieContainer.add(addsession, 0, 1);
+    }
+
+    @FXML
+    public void search()
+    {
+        if(searchbar.getText().length()!=0)
+        {
+            MovieContainer.getChildren().clear();
+            MovieContainer.getColumnConstraints().clear();
+            MovieContainer.getRowConstraints().clear();
+
+            int col = 0;
+            int line = 1;
+            boolean find=false;
+
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT * FROM movie");
+
+                while (rs.next())
+                {
+                    if(searchbar.getText().equalsIgnoreCase(rs.getString("Name")) || searchbar.getText().equalsIgnoreCase(rs.getString("Genre")) || searchbar.getText().equalsIgnoreCase(rs.getString("Year")))
+                    {
+                        find = true;
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
+                        VBox movieBox = fxmlLoader.load();
+                        MovieController mc = fxmlLoader.getController();
+                        mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
+
+                        if(col == 3)
+                        {
+                            col =0;
+                            ++line;
+                        }
+
+                        MovieContainer.add(movieBox, col++, line);
+                        GridPane.setMargin(movieBox, new Insets(10));
+                    }
+                }
+                con.close();
+            }catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            if(!find)
+            {
+                searchbar.clear();
+                searchbar.setPromptText("Nothing was found...");
+
+                try {
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+                    Statement stat = con.createStatement();
+                    ResultSet rs = stat.executeQuery("SELECT * FROM `movie`");
+
+                    while (rs.next())
+                    {
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
+                        VBox movieBox = fxmlLoader.load();
+                        MovieController mc = fxmlLoader.getController();
+                        mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), rs.getString("Review"));
+
+                        if(col == 3)
+                        {
+                            col =0;
+                            ++line;
+                        }
+
+                        MovieContainer.add(movieBox, col++, line);
+                        GridPane.setMargin(movieBox, new Insets(10));
+                    }
+                    con.close();
+                } catch (Exception e1) {
+                    System.out.println(e1.getMessage());
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void quickBook()
+    {
+
     }
 }
