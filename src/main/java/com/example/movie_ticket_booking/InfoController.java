@@ -1,7 +1,9 @@
 package com.example.movie_ticket_booking;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +14,8 @@ public class InfoController {
     @FXML
     private Label txtEmail;
 
+    @FXML
+    private VBox VbReservation;
     @FXML
     private Label txtLastName;
 
@@ -53,6 +57,27 @@ public class InfoController {
                     txtPassword.setText(rs.getString("password"));
                 }
 
+            }
+            con.close();
+        } catch (Exception e1) {
+            System.out.println(e1.getMessage());
+        }
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM users JOIN reservation ON reservation.Email_adress=users.email JOIN session ON reservation.ID_session=session.ID_session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON cinema.Id_cinema=session.Id_cinema");
+
+            while (rs.next())
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("Reservation.fxml"));
+                VBox Reservation = fxmlLoader.load();
+                ReservationController rc = fxmlLoader.getController();
+                rc.setResa(rs.getString("movie.Name"), rs.getString("movie.Author"), rs.getString("movie.Year"), rs.getString("cinema.name"), rs.getString("session.Date"), rs.getString("reservation.Nb_tickets"), rs.getString("reservation.Card_number"), rs.getString("reservation.ID_room"), rs.getString("reservation.FinalPrice"), rs.getString("movie.poster"));
+
+                VbReservation.getChildren().add(Reservation);
             }
             con.close();
         } catch (Exception e1) {

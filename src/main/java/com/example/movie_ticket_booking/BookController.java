@@ -44,6 +44,9 @@ public class BookController {
     private Button lock_hour;
 
     @FXML
+    private Label txtPrice;
+
+    @FXML
     private TextField place_nb;
 
     @FXML
@@ -136,6 +139,9 @@ public class BookController {
     @FXML
     private Button s9;
 
+    @FXML
+    private Label txtSynopsys;
+
     public int cpt_tickets = 0;
 
     private int sessionId;
@@ -146,13 +152,15 @@ public class BookController {
     private int account;
     private final int[] tab = new int[30];
 
-    public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account) throws SQLException {
+    public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account, String synopsys) throws SQLException {
         this.account=account;
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
         venue_cb.setItems(items);
         date_hour.setItems(items2);
+        txtSynopsys.setText("Synopsis: " + synopsys);
     }
+
 
     public void lock_cinema() {
         venue_cb.setDisable(true);
@@ -161,12 +169,15 @@ public class BookController {
     public void combo_cinema() {
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
         ObservableList<String> updatedItems2 = FXCollections.observableArrayList();
+        int price=0;
+
         if (!venue_cb.isDisable()) {
             try {
                 Connection con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat2 = con2.createStatement();
                 ResultSet rs2 = stat2.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND cinema.name='" + selectedCinema + "' ");
                 while (rs2.next()) {
+                    price=rs2.getInt("session.Price");
                     String date = rs2.getString("Date");
                     if (!rs2.wasNull()) {
                         updatedItems2.add(date);
@@ -181,6 +192,7 @@ public class BookController {
             }
         }
         if (date_hour.isDisable() && venue_cb.isDisable()) {
+            txtPrice.setText("Price: £"+price);
             setSeatButtons();
         }
     }
@@ -192,6 +204,7 @@ public class BookController {
     public void combo_date() {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         Set<String> uniqueCinemas = new HashSet<>();
+        int price=0;
 
         if (!date_hour.isDisable()) {
             try {
@@ -200,6 +213,7 @@ public class BookController {
                 ResultSet rs3 = stat3.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + film_titre.getText() + "' AND session.date='" + selectedDate + "' ");
 
                 while (rs3.next()) {
+                    price=rs3.getInt("session.Price");
                     String cinema = rs3.getString("cinema.name");
                     if (!rs3.wasNull()) {
                         uniqueCinemas.add(cinema);
@@ -217,6 +231,7 @@ public class BookController {
         }
 
         if (date_hour.isDisable() && venue_cb.isDisable()) {
+            txtPrice.setText("Price: £"+price);
             setSeatButtons();
         }
     }

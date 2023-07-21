@@ -37,7 +37,7 @@
             <Font size="19.0"/>
          </font>
       </Label>
-      <Label layoutX="364.0" layoutY="133.0" text="Resume" textFill="WHITE">
+      <Label layoutX="364.0" layoutY="133.0" text="Synopsys" textFill="WHITE">
          <font>
             <Font size="19.0"/>
          </font>

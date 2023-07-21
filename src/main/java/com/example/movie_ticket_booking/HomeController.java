@@ -263,7 +263,7 @@ public class HomeController {
                     String date = rs.getString("Date");
                     items.add(cinema);
                     items2.add(date);
-                    bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account);
+                    bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account, rs.getString("Resume"));
                 }
             }
 
