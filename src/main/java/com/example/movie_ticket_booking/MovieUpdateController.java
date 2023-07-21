@@ -94,7 +94,7 @@ public class MovieUpdateController {
         {
             error=true;
         }
-        if(Integer.parseInt(txtReview.getText())>5 || Integer.parseInt(txtReview.getText())<0)
+        if(Float.parseFloat(txtReview.getText())>5 || Float.parseFloat(txtReview.getText())<0)
         {
             error=true;
         }

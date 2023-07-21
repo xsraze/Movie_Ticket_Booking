@@ -67,7 +67,7 @@ public class InfoController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM users JOIN reservation ON reservation.Email_adress=users.email JOIN session ON reservation.ID_session=session.ID_session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON cinema.Id_cinema=session.Id_cinema");
+            ResultSet rs = stat.executeQuery("SELECT * FROM users JOIN reservation ON reservation.Email_adress=users.email JOIN session ON reservation.ID_session=session.ID_session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON cinema.Id_cinema=session.Id_cinema WHERE reservation.Email_adress = "+'"'+txtEmail.getText()+'"');
 
             while (rs.next())
             {
