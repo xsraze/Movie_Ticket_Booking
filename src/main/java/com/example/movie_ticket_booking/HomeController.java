@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashSet;
@@ -84,6 +83,28 @@ public class HomeController {
 
     public void Initialisation(int acc){
         account=acc;
+
+        combo_venue.setDisable(true);
+        combo_date.setDisable(true);
+        combo_seat.setDisable(true);
+
+        ObservableList<String> movie = FXCollections.observableArrayList();
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie");
+
+            while (rs.next()) {
+                    String movie_name = rs.getString("Name");
+                    movie.add(movie_name);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        combo_movie.setItems(movie);
 
         int col = 0;
         int line = 1;
@@ -529,7 +550,7 @@ public class HomeController {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie WHERE session.ID_movie=movie.ID_movie");
+            ResultSet rs = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie=movie.ID_movie JOIN cinema ON cinema.Id_cinema=session.Id_cinema");
 
             while (rs.next())
             {
@@ -537,8 +558,7 @@ public class HomeController {
                 fxmlLoader.setLocation(getClass().getResource("SalesDiscount.fxml"));
                 VBox SalesDiscount = fxmlLoader.load();
                 SalesDiscountController sdc = fxmlLoader.getController();
-                sdc.setDiscountInfo(rs.getString("movie.name"), rs.getString("session.id_cinema"), rs.getString("session.date"), rs.getString("session.ID_room"), rs.getString("movie.poster"), rs.getString("session.discount"), rs.getInt("session.ID_session"), account);
-                System.out.println("Probleme");
+                sdc.setDiscountInfo(rs.getString("movie.name"), rs.getString("cinema.name"), rs.getString("session.date"), rs.getString("session.ID_room"), rs.getString("movie.poster"), rs.getString("session.discount"), rs.getInt("session.ID_session"), account);
                 ++line;
 
                 MovieContainer.add(SalesDiscount, 0, line);
@@ -817,6 +837,7 @@ public class HomeController {
 
         int line = 1;
 
+
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
@@ -924,7 +945,7 @@ public class HomeController {
 
                 while (rs.next())
                 {
-                    if(searchbar.getText().equalsIgnoreCase(rs.getString("Name")) || searchbar.getText().equalsIgnoreCase(rs.getString("Genre")) || searchbar.getText().equalsIgnoreCase(rs.getString("Year")))
+                    if(rs.getString("Name").contains(searchbar.getText()) || rs.getString("Genre").contains(searchbar.getText()) || rs.getString("Year").contains(searchbar.getText()) || rs.getString("Author").contains(searchbar.getText()))
                     {
                         find = true;
                         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -985,8 +1006,168 @@ public class HomeController {
     }
 
     @FXML
+    public void setVenue(){
+        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        if (!combo_movie.isDisable()) {
+            combo_venue.setDisable(false);
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN session ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie WHERE movie.Name = "+'"'+combo_movie.getSelectionModel().getSelectedItem()+'"');
+                while (rs3.next()) {
+                    String venue = rs3.getString("cinema.name");
+                    if (!rs3.wasNull()) {
+                        updatedItems.add(venue);
+                    }
+                }
+                combo_venue.setItems(updatedItems);
+                combo_movie.setDisable(true);
+                con.close();
+                stat.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void setDate(){
+        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        if (!combo_venue.isDisable()) {
+            combo_date.setDisable(false);
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN session ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie WHERE movie.Name = "+'"'+combo_movie.getSelectionModel().getSelectedItem()+'"' + " AND cinema.name ="+'"'+combo_venue.getSelectionModel().getSelectedItem()+'"');
+                while (rs3.next()) {
+                    String Date = rs3.getString("session.Date");
+                    if (!rs3.wasNull()) {
+                        updatedItems.add(Date);
+                    }
+                }
+                combo_date.setItems(updatedItems);
+                combo_venue.setDisable(true);
+                con.close();
+                stat.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void setSeat(){
+        ObservableList<String> updatedItems = FXCollections.observableArrayList();
+        if (!combo_date.isDisable()) {
+            combo_seat.setDisable(false);
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                Statement stat = con.createStatement();
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM session WHERE session.Date = "+'"'+combo_date.getSelectionModel().getSelectedItem()+'"');
+                while (rs3.next()) {
+                    for(int i=0; i<30;i++){
+                        int seat = rs3.getInt("session.seat_" + (i+1));
+                        if (!rs3.wasNull() && seat==0) {
+                            updatedItems.add(String.valueOf(i+1));
+                        }
+                    }
+                }
+                combo_seat.setItems(updatedItems);
+                combo_date.setDisable(true);
+                con.close();
+                stat.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void setBook(){
+        combo_seat.setDisable(true);
+    }
+
+    @FXML
+    public void Reset()
+    {
+        combo_seat.getItems().clear();
+        combo_movie.getItems().clear();
+        combo_venue.getItems().clear();
+        combo_date.getItems().clear();
+
+        combo_venue.setDisable(true);
+        combo_date.setDisable(true);
+        combo_seat.setDisable(true);
+        combo_movie.setDisable(false);
+
+        ObservableList<String> movie = FXCollections.observableArrayList();
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT * FROM movie");
+
+            while (rs.next()) {
+                String movie_name = rs.getString("Name");
+                movie.add(movie_name);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        combo_movie.setItems(movie);
+    }
+
+    @FXML
     public void quickBook()
     {
+        int[] tab = new int[30];
+        if(combo_seat.isDisable())
+        {
+            String selectedDate = combo_date.getSelectionModel().getSelectedItem();
+            String selectedCinema = combo_venue.getSelectionModel().getSelectedItem();
+
+            if (combo_date.isDisable() && combo_venue.isDisable()) {
+                if (selectedDate != null && selectedCinema != null) {
+                    try {
+                        Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                        Statement stat4 = con4.createStatement();
+                        ResultSet rs4 = stat4.executeQuery("SELECT * FROM session WHERE Date = '" + selectedDate + "' AND Id_cinema = (SELECT Id_cinema FROM cinema WHERE Name = '" + selectedCinema + "')");
+
+                        if (rs4.next()) {
+                            int seatNumber = Integer.parseInt(combo_seat.getSelectionModel().getSelectedItem());
+
+                            for (int i = 0; i < 30; i++) {
+                                if(i==seatNumber-1 || rs4.getInt("seat_"+(i+1))==1)
+                                    tab[i] = 1;
+                            }
+
+                        }
+                        rs4.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                try {
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                    Statement stat = con.createStatement();
+                    ResultSet rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie WHERE session.Date='"+combo_date.getSelectionModel().getSelectedItem()+"'");
+
+                    while (rs.next()) {
+                        payment(rs.getInt("session.ID_session"), rs.getString("ID_movie"),1,tab);
+                    }
+
+                    rs.close();
+                    stat.close();
+                    con.close();
+
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
 
     }
 }

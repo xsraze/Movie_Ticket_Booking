@@ -52,31 +52,32 @@
                   <Font size="28.0" />
                </font>
             </Label>
-            <Label layoutX="263.0" layoutY="12.0" text="Venue" textFill="WHITE">
+            <Label layoutX="488.0" layoutY="12.0" text="Venue" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="819.0" layoutY="12.0" text="Seat" textFill="WHITE">
+            <Label layoutX="828.0" layoutY="11.0" text="Seat" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="630.0" layoutY="12.0" text="Date" textFill="WHITE">
+            <Label layoutX="659.0" layoutY="11.0" text="Date" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="439.0" layoutY="13.0" text="Film" textFill="WHITE">
+            <Label layoutX="312.0" layoutY="13.0" text="Film" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="990.0" layoutY="35.0" mnemonicParsing="false" onAction="#quickBook" text="Search" />
-            <ComboBox fx:id="combo_venue" layoutX="259.0" layoutY="46.0" prefWidth="150.0" promptText="Choose a cinema" />
-            <ComboBox fx:id="combo_movie" layoutX="436.0" layoutY="46.0" prefWidth="150.0" promptText="Choose a movie" />
-            <ComboBox fx:id="combo_date" layoutX="625.0" layoutY="47.0" prefWidth="150.0" promptText="Choose a date and an hour" />
-            <ComboBox fx:id="combo_seat" layoutX="817.0" layoutY="48.0" prefWidth="150.0" promptText="Choose a seat" />
+            <Button alignment="CENTER" layoutX="995.0" layoutY="28.0" mnemonicParsing="false" onAction="#quickBook" prefHeight="35.0" prefWidth="59.0" style="-fx-background-radius: 30;" text="Book" />
+            <ComboBox fx:id="combo_venue" layoutX="484.0" layoutY="46.0" onAction="#setDate" prefWidth="150.0" promptText="Choose a cinema" />
+            <ComboBox fx:id="combo_movie" layoutX="309.0" layoutY="46.0" onAction="#setVenue" prefWidth="150.0" promptText="Choose a movie" />
+            <ComboBox fx:id="combo_date" layoutX="654.0" layoutY="46.0" onAction="#setSeat" prefWidth="150.0" promptText="Choose a date" />
+            <ComboBox fx:id="combo_seat" layoutX="826.0" layoutY="47.0" onAction="#setBook" prefWidth="150.0" promptText="Choose a seat" />
+            <Button layoutX="215.0" layoutY="32.0" mnemonicParsing="false" onAction="#Reset" prefHeight="30.0" prefWidth="52.0" style="-fx-background-radius: 25;" text="Reset" />
          </children></AnchorPane>
    </bottom>
    <left>
