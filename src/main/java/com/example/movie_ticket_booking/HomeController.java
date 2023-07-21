@@ -238,9 +238,9 @@ public class HomeController {
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
 
-        Connection con = null;
-        ResultSet rs = null;
-        Statement stat = null;
+        Connection con;
+        ResultSet rs;
+        Statement stat;
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -487,7 +487,6 @@ public class HomeController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("Login.fxml"));
             AnchorPane Film = fxmlLoader.load();
-            LoginController lc = fxmlLoader.getController();
             bpane.setCenter(Film);
         }
 
@@ -511,7 +510,6 @@ public class HomeController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("Registration.fxml"));
             AnchorPane registration = fxmlLoader.load();
-            RegistrationController rc = fxmlLoader.getController();
             bpane.setCenter(registration);
         }
     }
@@ -523,7 +521,6 @@ public class HomeController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("Login.fxml"));
             AnchorPane login = fxmlLoader.load();
-            LoginController lc = fxmlLoader.getController();
             bpane.setCenter(login);
         }
 

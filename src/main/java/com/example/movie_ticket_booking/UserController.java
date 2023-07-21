@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class UserController {
+    public ToggleGroup type;
     @FXML
     private RadioButton RadCustomer;
 

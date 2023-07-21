@@ -58,13 +58,11 @@ public class UpdateSessionController {
     private int id_session;
     private int id_movie;
     private int id_venue;
-    private String ID_room;
 
     public void setSession(String movie, String cinema, String ID_room, String Discount, String Price, String Date, int account, int session)
     {
         this.account = account;
         this.id_session=session;
-        this.ID_room=ID_room;
         ObservableList<String> Movie = FXCollections.observableArrayList();
         ObservableList<String> Cinema = FXCollections.observableArrayList();
         ObservableList<String> room = FXCollections.observableArrayList();

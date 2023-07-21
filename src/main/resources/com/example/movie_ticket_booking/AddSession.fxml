@@ -7,89 +7,94 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.AddSessionController">
-   <children>
-      <Label layoutX="320.0" layoutY="14.0" text="Add Session" textFill="WHITE">
-         <font>
-            <Font size="34.0" />
-         </font>
-      </Label>
-      <Label layoutX="272.0" layoutY="123.0" text="Movie" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="272.0" layoutY="160.0" text="Venue" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="271.0" layoutY="197.0" text="Room" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="270.0" layoutY="233.0" text="Price" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="270.0" layoutY="270.0" text="Discount" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="270.0" layoutY="307.0" text="Date" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtPrice" layoutX="391.0" layoutY="235.0" promptText="Price" />
-      <TextField fx:id="txtDate" layoutX="391.0" layoutY="308.0" promptText="YYYY-MM-DD HH:MM:SS" />
-      <TextField fx:id="txtDiscount" layoutX="391.0" layoutY="272.0" promptText="Discount" />
-      <Button layoutX="270.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddExit" prefHeight="43.0" prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Exit">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Label fx:id="ErrMovie" layoutX="574.0" layoutY="123.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="ErrVenue" layoutX="574.0" layoutY="160.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="ErrRoom" layoutX="573.0" layoutY="197.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="ErrPrice" layoutX="572.0" layoutY="233.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="ErrDiscount" layoutX="572.0" layoutY="270.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="ErrDate" layoutX="572.0" layoutY="307.0" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="comboVenue" layoutX="391.0" layoutY="162.0" onAction="#setVenue" prefHeight="25.0" prefWidth="149.0" promptText="Venue" />
-      <ComboBox fx:id="comboRoom" layoutX="391.0" layoutY="198.0" onAction="#setRoom" prefHeight="25.0" prefWidth="149.0" promptText="Room" />
-      <Button layoutX="416.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddAgain" prefHeight="43.0" prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Again">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <ComboBox fx:id="comboMovie" layoutX="391.0" layoutY="124.0" onAction="#setMovie" prefHeight="25.0" prefWidth="149.0" promptText="Movie" />
-      <Label layoutX="826.0" layoutY="478.0" prefHeight="17.0" prefWidth="40.0" />
-   </children>
+<AnchorPane prefHeight="549.0" prefWidth="825.0" style="-fx-background-color: #232323;"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.movie_ticket_booking.AddSessionController">
+   <Label layoutX="320.0" layoutY="14.0" text="Add Session" textFill="WHITE">
+      <font>
+         <Font size="34.0"/>
+      </font>
+   </Label>
+   <Label layoutX="272.0" layoutY="123.0" text="Movie" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label layoutX="272.0" layoutY="160.0" text="Venue" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label layoutX="271.0" layoutY="197.0" text="Room" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label layoutX="270.0" layoutY="233.0" text="Price" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label layoutX="270.0" layoutY="270.0" text="Discount" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label layoutX="270.0" layoutY="307.0" text="Date" textFill="WHITE">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="txtPrice" layoutX="391.0" layoutY="235.0" promptText="Price"/>
+   <TextField fx:id="txtDate" layoutX="391.0" layoutY="308.0" promptText="YYYY-MM-DD HH:MM:SS"/>
+   <TextField fx:id="txtDiscount" layoutX="391.0" layoutY="272.0" promptText="Discount"/>
+   <Button layoutX="270.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddExit" prefHeight="43.0"
+           prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Exit">
+      <font>
+         <Font name="System Bold" size="14.0"/>
+      </font>
+   </Button>
+   <Label fx:id="ErrMovie" layoutX="574.0" layoutY="123.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label fx:id="ErrVenue" layoutX="574.0" layoutY="160.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label fx:id="ErrRoom" layoutX="573.0" layoutY="197.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label fx:id="ErrPrice" layoutX="572.0" layoutY="233.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label fx:id="ErrDiscount" layoutX="572.0" layoutY="270.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <Label fx:id="ErrDate" layoutX="572.0" layoutY="307.0" textFill="RED">
+      <font>
+         <Font size="19.0"/>
+      </font>
+   </Label>
+   <ComboBox fx:id="comboVenue" layoutX="391.0" layoutY="162.0" onAction="#setVenue" prefHeight="25.0" prefWidth="149.0"
+             promptText="Venue"/>
+   <ComboBox fx:id="comboRoom" layoutX="391.0" layoutY="198.0" onAction="#setRoom" prefHeight="25.0" prefWidth="149.0"
+             promptText="Room"/>
+   <Button layoutX="416.0" layoutY="379.0" mnemonicParsing="false" onAction="#AddAgain" prefHeight="43.0"
+           prefWidth="123.0" style="-fx-background-radius: 50;" text="Add and Again">
+      <font>
+         <Font name="System Bold" size="14.0"/>
+      </font>
+   </Button>
+   <ComboBox fx:id="comboMovie" layoutX="391.0" layoutY="124.0" onAction="#setMovie" prefHeight="25.0" prefWidth="149.0"
+             promptText="Movie"/>
+   <Label layoutX="826.0" layoutY="478.0" prefHeight="17.0" prefWidth="40.0"/>
 </AnchorPane>
