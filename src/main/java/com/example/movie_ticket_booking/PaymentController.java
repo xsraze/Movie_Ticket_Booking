@@ -6,17 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class PaymentController {
@@ -33,9 +30,6 @@ public class PaymentController {
     private Label final_p;
 
     @FXML
-    private ImageView logo;
-
-    @FXML
     private Label nb_tickets;
 
     @FXML
@@ -46,44 +40,62 @@ public class PaymentController {
 
     @FXML
     private ImageView poster;
-    @FXML
-    private Button pay_button;
 
     @FXML
     private Label titre_movie;
+
     private int id_sess;
     private int[] seat;
     private int id_room;
+    private boolean verif = false;
 
-    public void setPayment(String email2, String cb2, String post, String title, int nb_tick,int price, int disc, int id_session, int[] tab, int id_rooom){
-        int fp=nb_tick*price-nb_tick*price*disc/100;
+    public void setPayment(String email2, String cb2, String post, String title, int nb_tick, int price, int disc, int id_session, int[] tab, int id_rooom) {
+
+        int fp=nb_tick * price;
         email.setText(email2);
         cb.setText(cb2);
         poster.setImage(new Image(post));
         titre_movie.setText(title);
-        nb_tickets.setText(""+nb_tick);
-        subtotal1.setText("£ "+nb_tick*price);
-        subtotal2.setText("£ "+nb_tick*price);
-        discount.setText(disc+" %");
-        final_p.setText("£ "+fp);
-        if(email.getText()!=null)
-        {
+        nb_tickets.setText("" + nb_tick);
+        subtotal1.setText("£ " + nb_tick * price);
+        subtotal2.setText("£ " + nb_tick * price);
+        discount.setText("0" + " %");
+        final_p.setText("£ " + fp);
+
+
+        if (email.getText() != null) {
+            fp = nb_tick * price - nb_tick * price * disc / 100;
             email.setDisable(true);
+            discount.setText(disc + " %");
+            final_p.setText("£ " + fp);
+            verif=true;
         }
-        id_sess=id_session;
-        seat=tab;
-        id_room=id_rooom;
+        id_sess = id_session;
+        seat = tab;
+        id_room = id_rooom;
     }
 
     @FXML
-    void pay(ActionEvent event) throws IOException {
+    void pay(ActionEvent event) {
         String emailAddress = email.getText();
         String cardNumber = cb.getText();
         int ticketCount = Integer.parseInt(nb_tickets.getText());
-        int subTotal = Integer.parseInt(subtotal1.getText().substring(2));
         int discountPercentage = Integer.parseInt(discount.getText().substring(0, discount.getText().length() - 2));
         int finalPrice = Integer.parseInt(final_p.getText().substring(2));
-        if (email.getText() != null&&cb.getText()!=null){
+        boolean verif_cb=false;
+        boolean verif_email=false;
+
+        if (emailAddress.trim().isEmpty() || !isValidEmail(emailAddress)) {
+            showErrorMessage("Please enter a correct adress email.");
+            verif_cb=true;
+        }
+
+        if (cardNumber.trim().isEmpty() || cardNumber.length() < 16 || cardNumber.length() > 19) {
+            showErrorMessage("Please enter a correct card number (between 16 and 19 numbers).");
+            verif_email=true;
+        }
+
+        if (!verif_cb && !verif_email) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
@@ -110,9 +122,9 @@ public class PaymentController {
                 con.close();
 
                 Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Payment Successful");
+                alert.setTitle("Payment succeeded");
                 alert.setHeaderText(null);
-                alert.setContentText("Your payment was successful. Thank you for booking!");
+                alert.setContentText("Your payment has been allowed. Thank you for your reservation !");
 
                 alert.showAndWait();
             } catch (SQLException e) {
@@ -131,29 +143,25 @@ public class PaymentController {
                     account=rs.getInt("ID_user");
                 }
 
-                if(find==true)
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+                HomeController hc = fxmlLoader.getController();
+
+                if(find)
                 {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-                    HomeController hc = fxmlLoader.getController();
                     hc.Initialisation(account);
                     Scene scene = new Scene(root);
                     lstage.setScene(scene);
-                    lstage.show();
                 }
 
                 else
                 {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-                    HomeController hc = fxmlLoader.getController();
                     hc.Initialisation(0);
                     Scene scene = new Scene(root);
                     lstage.setScene(scene);
-                    lstage.show();
                 }
+                lstage.show();
 
 
             }catch (Exception e){
@@ -162,5 +170,33 @@ public class PaymentController {
         }
     }
 
-}
+    private boolean isValidEmail(String email) {
+        if(!verif) {
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+                PreparedStatement stat = con.prepareStatement("SELECT * FROM reservation WHERE Email_adress = ?");
+                stat.setString(1, email);
+                ResultSet rs = stat.executeQuery();
+                if (rs.next()) {
+                    return false;
+                }
+                stat.close();
+                con.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
+    }
 
+
+
+
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
