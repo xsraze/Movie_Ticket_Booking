@@ -14,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -146,9 +144,9 @@ public class BookController {
     public ComboBox<String> venue_cb;
 
     private int account;
-    private int[] tab = new int[30];
+    private final int[] tab = new int[30];
 
-    public void setBook(String post, String nom, ObservableList items, ObservableList items2, int account) throws SQLException {
+    public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account) throws SQLException {
         this.account=account;
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
@@ -236,7 +234,6 @@ public class BookController {
 
                 if (rs4.next()) {
                     sessionId = rs4.getInt("ID_session");
-                    int roomId = rs4.getInt("ID_room");
 
                     List<Integer> reservedSeats = new ArrayList<>();
 
@@ -251,11 +248,7 @@ public class BookController {
                         String seatButtonId = "s" + seatNumber;
                         Button seatButton = (Button) getClass().getDeclaredField(seatButtonId).get(this);
 
-                        if (seatValue == 1) {
-                            seatButton.setDisable(true);
-                        } else {
-                            seatButton.setDisable(false);
-                        }
+                        seatButton.setDisable(seatValue == 1);
                     }
                 }
 
@@ -271,7 +264,7 @@ public class BookController {
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
 
-        if (date_hour.isDisable() && venue_cb.isDisable()) {
+
             if (selectedDate != null && selectedCinema != null) {
                 try {
                     Connection con4 = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -279,7 +272,6 @@ public class BookController {
                     ResultSet rs4 = stat4.executeQuery("SELECT * FROM session WHERE Date = '" + selectedDate + "' AND Id_cinema = (SELECT Id_cinema FROM cinema WHERE Name = '" + selectedCinema + "')");
 
                     if (rs4.next()) {
-                        int sessionId = rs4.getInt("ID_session");
                         Button seatButton = (Button) event.getSource();
                         int seatNumber = Integer.parseInt(seatButton.getText());
 
@@ -297,7 +289,7 @@ public class BookController {
                     System.out.println(e.getMessage());
                 }
             }
-        }
+
     }
 
     @FXML
