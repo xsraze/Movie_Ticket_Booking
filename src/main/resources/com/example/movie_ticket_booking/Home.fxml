@@ -18,167 +18,135 @@
 
 <BorderPane fx:id="bpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="1081.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.movie_ticket_booking.HomeController">
    <top>
-      <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #323131; -fx-border-color: white;"
-                  BorderPane.alignment="CENTER">
-         <ImageView fitHeight="65.0" fitWidth="78.0" layoutX="30.0" layoutY="8.0" onMouseClicked="#Home"
-                    pickOnBounds="true" preserveRatio="true">
-            <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492189745217576/image-removebg-preview_1.png"/>
+      <AnchorPane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
+         <ImageView fitHeight="65.0" fitWidth="187.0" layoutX="5.0" layoutY="8.0" onMouseClicked="#Home" pickOnBounds="true">
+            <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1130245534448365628/image_2023-07-16_220448917-removebg-preview.png" />
          </ImageView>
-         <TextField fx:id="searchbar" layoutX="201.0" layoutY="21.0" prefHeight="36.0" prefWidth="283.0"
-                    promptText="Search"/>
-         <Button layoutX="498.0" layoutY="21.0" mnemonicParsing="false" onAction="#search" prefHeight="35.0"
-                 prefWidth="36.0" text="🔎"/>
-         <Button fx:id="login_btn" layoutX="887.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#Login"
-                 style="-fx-background-color: transparent;" text="Log in" textFill="WHITE">
+         <TextField fx:id="searchbar" layoutX="201.0" layoutY="21.0" prefHeight="36.0" prefWidth="283.0" promptText="Search" />
+         <Button layoutX="498.0" layoutY="21.0" mnemonicParsing="false" onAction="#search" prefHeight="35.0" prefWidth="36.0" text="🔎" />
+         <Button fx:id="login_btn" layoutX="887.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#Login" style="-fx-background-color: transparent;" text="Log in" textFill="WHITE">
             <font>
-               <Font name="System Bold" size="18.0"/>
+               <Font name="System Bold" size="18.0" />
             </font>
          </Button>
-         <Button fx:id="signin_btn" layoutX="667.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#Signin"
-                 style="-fx-background-color: transparent;" text="Sign in" textFill="WHITE">
+         <Button fx:id="signin_btn" layoutX="667.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#Signin" style="-fx-background-color: transparent;" text="Sign in" textFill="WHITE">
             <font>
-               <Font name="System Bold" size="18.0"/>
+               <Font name="System Bold" size="18.0" />
             </font>
          </Button>
-         <ImageView fitHeight="52.0" fitWidth="62.0" layoutX="1016.0" layoutY="12.0" onMouseClicked="#profile"
-                    pickOnBounds="true" preserveRatio="true">
-            <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492999405289554/image-removebg-preview.png"/>
+         <ImageView fitHeight="52.0" fitWidth="62.0" layoutX="1016.0" layoutY="12.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
+            <Image url="https://cdn.discordapp.com/attachments/1126485859454160899/1126492999405289554/image-removebg-preview.png" />
          </ImageView>
       </AnchorPane>
    </top>
    <bottom>
-      <AnchorPane prefHeight="90.0" prefWidth="1080.0" style="-fx-background-color: #323131; -fx-border-color: white;"
-                  BorderPane.alignment="CENTER">
-         <Polygon layoutX="176.0" layoutY="45.0"
-                  points="-167.88893127441406, -38.44443893432617, -167.88894653320312, 43.999961853027344, -12.333389282226562, -38.44443893432617"
-                  stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0"/>
-         <Polygon layoutX="168.0" layoutY="49.0"
-                  points="-159.88893127441406, 39.999961853027344, 28.555526733398438, 39.999961853027344, -4.3333892822265625, -42.44443893432617"
-                  stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0"/>
-         <Label contentDisplay="TOP" layoutX="22.0" layoutY="21.0" text="Quick Book" textAlignment="CENTER"
-                textFill="WHITE" textOverrun="CLIP">
+      <AnchorPane prefHeight="90.0" prefWidth="1080.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
+         <Polygon layoutX="176.0" layoutY="45.0" points="-167.88893127441406, -38.44443893432617, -167.88894653320312, 43.999961853027344, -12.333389282226562, -38.44443893432617" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+         <Polygon layoutX="168.0" layoutY="49.0" points="-159.88893127441406, 39.999961853027344, 28.555526733398438, 39.999961853027344, -4.3333892822265625, -42.44443893432617" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+         <Label contentDisplay="TOP" layoutX="22.0" layoutY="21.0" text="Quick Book" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
             <font>
-               <Font size="28.0"/>
+               <Font size="28.0" />
             </font>
          </Label>
          <Label layoutX="488.0" layoutY="12.0" text="Venue" textFill="WHITE">
             <font>
-               <Font size="20.0"/>
+               <Font size="20.0" />
             </font>
          </Label>
          <Label layoutX="828.0" layoutY="11.0" text="Seat" textFill="WHITE">
             <font>
-               <Font size="20.0"/>
+               <Font size="20.0" />
             </font>
          </Label>
          <Label layoutX="659.0" layoutY="11.0" text="Date" textFill="WHITE">
             <font>
-               <Font size="20.0"/>
+               <Font size="20.0" />
             </font>
          </Label>
          <Label layoutX="312.0" layoutY="13.0" text="Film" textFill="WHITE">
             <font>
-               <Font size="20.0"/>
+               <Font size="20.0" />
             </font>
          </Label>
-         <Button alignment="CENTER" layoutX="995.0" layoutY="28.0" mnemonicParsing="false" onAction="#quickBook"
-                 prefHeight="35.0" prefWidth="59.0" style="-fx-background-radius: 30;" text="Book"/>
-         <ComboBox fx:id="combo_venue" layoutX="484.0" layoutY="46.0" onAction="#setDate" prefWidth="150.0"
-                   promptText="Choose a cinema"/>
-         <ComboBox fx:id="combo_movie" layoutX="309.0" layoutY="46.0" onAction="#setVenue" prefWidth="150.0"
-                   promptText="Choose a movie"/>
-         <ComboBox fx:id="combo_date" layoutX="654.0" layoutY="46.0" onAction="#setSeat" prefWidth="150.0"
-                   promptText="Choose a date"/>
-         <ComboBox fx:id="combo_seat" layoutX="826.0" layoutY="47.0" onAction="#setBook" prefWidth="150.0"
-                   promptText="Choose a seat"/>
-         <Button layoutX="215.0" layoutY="32.0" mnemonicParsing="false" onAction="#Reset" prefHeight="30.0"
-                 prefWidth="52.0" style="-fx-background-radius: 25;" text="Reset"/>
+         <Button alignment="CENTER" layoutX="995.0" layoutY="28.0" mnemonicParsing="false" onAction="#quickBook" prefHeight="35.0" prefWidth="59.0" style="-fx-background-radius: 30;" text="Book" />
+         <ComboBox fx:id="combo_venue" layoutX="484.0" layoutY="46.0" onAction="#setDate" prefWidth="150.0" promptText="Choose a cinema" />
+         <ComboBox fx:id="combo_movie" layoutX="309.0" layoutY="46.0" onAction="#setVenue" prefWidth="150.0" promptText="Choose a movie" />
+         <ComboBox fx:id="combo_date" layoutX="654.0" layoutY="46.0" onAction="#setSeat" prefWidth="150.0" promptText="Choose a date" />
+         <ComboBox fx:id="combo_seat" layoutX="826.0" layoutY="47.0" onAction="#setBook" prefWidth="150.0" promptText="Choose a seat" />
+         <Button layoutX="215.0" layoutY="32.0" mnemonicParsing="false" onAction="#Reset" prefHeight="30.0" prefWidth="52.0" style="-fx-background-radius: 25;" text="Reset" />
       </AnchorPane>
    </bottom>
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #323131; -fx-border-color: white;"
-                  BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #323131; -fx-border-color: white;" BorderPane.alignment="CENTER">
          <Label alignment="CENTER" layoutX="52.0" layoutY="14.0" text="Browse" textFill="WHITE">
             <font>
-               <Font size="30.0"/>
+               <Font size="30.0" />
             </font>
          </Label>
-         <Label layoutX="47.0" layoutY="67.0" onMouseClicked="#Year" prefHeight="25.0" prefWidth="106.0" text="📅   Year"
-                textFill="WHITE">
+         <Label layoutX="47.0" layoutY="67.0" onMouseClicked="#Year" prefHeight="25.0" prefWidth="106.0" text="📅   Year" textFill="WHITE">
             <font>
-               <Font size="19.0"/>
+               <Font size="19.0" />
             </font>
          </Label>
-         <Label layoutX="48.0" layoutY="104.0" onMouseClicked="#Name" prefHeight="25.0" prefWidth="106.0"
-                text="🎬 Review" textFill="WHITE">
+         <Label layoutX="48.0" layoutY="104.0" onMouseClicked="#Name" prefHeight="25.0" prefWidth="106.0" text="🎬 Review" textFill="WHITE">
             <font>
-               <Font size="19.0"/>
+               <Font size="19.0" />
             </font>
          </Label>
-         <Separator layoutY="186.0" prefWidth="200.0"/>
-         <Label layoutX="48.0" layoutY="139.0" onMouseClicked="#Genre" prefHeight="25.0" prefWidth="106.0"
-                text="📜  Genre" textFill="WHITE">
+         <Separator layoutY="186.0" prefWidth="200.0" />
+         <Label layoutX="48.0" layoutY="139.0" onMouseClicked="#Genre" prefHeight="25.0" prefWidth="106.0" text="📜  Genre" textFill="WHITE">
             <font>
-               <Font size="19.0"/>
+               <Font size="19.0" />
             </font>
          </Label>
          <Label fx:id="txtadmin" alignment="CENTER" layoutX="53.0" layoutY="199.0" textFill="WHITE">
             <font>
-               <Font size="30.0"/>
+               <Font size="30.0" />
             </font>
          </Label>
-         <Label fx:id="txtanalyzed" alignment="CENTER" layoutX="49.0" layoutY="236.0" onMouseClicked="#MovieAnalyzed"
-                prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtanalyzed" alignment="CENTER" layoutX="49.0" layoutY="236.0" onMouseClicked="#MovieAnalyzed" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtupdate" alignment="CENTER" layoutX="49.0" layoutY="261.0" onMouseClicked="#UpdateMovie"
-                prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtupdate" alignment="CENTER" layoutX="49.0" layoutY="261.0" onMouseClicked="#UpdateMovie" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtdiscount" alignment="CENTER" layoutX="49.0" layoutY="341.0" onMouseClicked="#DiscountOffers"
-                prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtdiscount" alignment="CENTER" layoutX="49.0" layoutY="341.0" onMouseClicked="#DiscountOffers" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtprofile" alignment="CENTER" layoutX="49.0" layoutY="369.0" onMouseClicked="#UpdateProfiles"
-                prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtprofile" alignment="CENTER" layoutX="49.0" layoutY="369.0" onMouseClicked="#UpdateProfiles" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtsaleCinema" alignment="CENTER" layoutX="3.0" layoutY="396.0" onMouseClicked="#SalesCinema"
-                prefHeight="25.0" prefWidth="198.0" text="test" textFill="WHITE">
+         <Label fx:id="txtsaleCinema" alignment="CENTER" layoutX="3.0" layoutY="396.0" onMouseClicked="#SalesCinema" prefHeight="25.0" prefWidth="198.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtsaleMovie" alignment="CENTER" layoutX="2.0" layoutY="423.0" onMouseClicked="#SalesMovie"
-                prefHeight="25.0" prefWidth="199.0" text="test" textFill="WHITE">
+         <Label fx:id="txtsaleMovie" alignment="CENTER" layoutX="2.0" layoutY="423.0" onMouseClicked="#SalesMovie" prefHeight="25.0" prefWidth="199.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtsaleSession" alignment="CENTER" layoutX="2.0" layoutY="450.0" onMouseClicked="#SalesSession"
-                prefHeight="25.0" prefWidth="199.0" text="test" textFill="WHITE">
+         <Label fx:id="txtsaleSession" alignment="CENTER" layoutX="2.0" layoutY="450.0" onMouseClicked="#SalesSession" prefHeight="25.0" prefWidth="199.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtAddSession" alignment="CENTER" layoutX="49.0" layoutY="287.0" onMouseClicked="#AddSession"
-                prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtAddSession" alignment="CENTER" layoutX="49.0" layoutY="287.0" onMouseClicked="#AddSession" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
-         <Label fx:id="txtUpdateSession" alignment="CENTER" layoutX="49.0" layoutY="313.0"
-                onMouseClicked="#UpdateSession" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
+         <Label fx:id="txtUpdateSession" alignment="CENTER" layoutX="49.0" layoutY="313.0" onMouseClicked="#UpdateSession" prefHeight="25.0" prefWidth="106.0" text="test" textFill="WHITE">
             <font>
-               <Font size="13.0"/>
+               <Font size="13.0" />
             </font>
          </Label>
       </AnchorPane>
@@ -187,13 +155,12 @@
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #232323;" BorderPane.alignment="CENTER">
          <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #232323;" VBox.vgrow="ALWAYS">
             <AnchorPane prefHeight="476.0" prefWidth="874.0" style="-fx-background-color: #232323;">
-               <GridPane fx:id="MovieContainer" prefHeight="0.0" prefWidth="0.0"
-                         style="-fx-background-color: #232323;">
+               <GridPane fx:id="MovieContainer" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #232323;">
                   <rowConstraints>
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                </GridPane>
-               <Label layoutX="860.0" layoutY="467.0"/>
+               <Label layoutX="860.0" layoutY="467.0" />
             </AnchorPane>
          </ScrollPane>
       </VBox>
