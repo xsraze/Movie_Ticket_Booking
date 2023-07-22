@@ -226,7 +226,7 @@ public class AddSessionController {
 
                 if(!verified)
                 {
-                    request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
+                    request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room` , `seat_1`, `seat_2`, `seat_3`, `seat_4`, `seat_5`, `seat_6`, `seat_7`, `seat_8`, `seat_9`, `seat_10`, `seat_11`, `seat_12`, `seat_13`, `seat_14`, `seat_15`, `seat_16`, `seat_17`, `seat_18`, `seat_19`, `seat_20`, `seat_21`, `seat_22`, `seat_23`, `seat_24`, `seat_25`, `seat_26`, `seat_27`, `seat_28`, `seat_29`, `seat_30`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0');";
 
                     stat.executeUpdate(request);
 
@@ -243,7 +243,7 @@ public class AddSessionController {
                 }
 
             } catch (Exception e1) {
-                ErrDate.setText("Put Date -> YYYY-MM-DD H:M:S");
+                ErrDate.setText(e1.getMessage());
             }
         }
     }
