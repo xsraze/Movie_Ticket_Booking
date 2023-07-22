@@ -1046,7 +1046,7 @@ public class HomeController {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
-                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN session ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie WHERE movie.Name = "+'"'+combo_movie.getSelectionModel().getSelectedItem()+'"');
+                ResultSet rs3 = stat.executeQuery("SELECT * FROM cinema JOIN session ON cinema.Id_cinema=session.Id_cinema JOIN movie ON movie.ID_movie=session.ID_movie WHERE movie.Name = "+'"'+combo_movie.getSelectionModel().getSelectedItem()+'"' + " GROUP BY cinema.name");
                 while (rs3.next()) {
                     String venue = rs3.getString("cinema.name");
                     if (!rs3.wasNull()) {
