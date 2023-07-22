@@ -14,8 +14,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
 
 public class HomeController {
 
@@ -238,39 +236,50 @@ public class HomeController {
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
 
+
         Connection con;
         ResultSet rs;
         Statement stat;
 
+        FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
+        AnchorPane bookPane = fxmlLoaderBook.load();
+        BookController bc = fxmlLoaderBook.getController();
+
+
+        ObservableList<String> items = FXCollections.observableArrayList();
+        ObservableList<String> items2 = FXCollections.observableArrayList();
+
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
             stat = con.createStatement();
-            rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + name + "' ");
-
-            FXMLLoader fxmlLoaderBook = new FXMLLoader(MainApplication.class.getResource("Book.fxml"));
-            AnchorPane bookPane = fxmlLoaderBook.load();
-            BookController bc = fxmlLoaderBook.getController();
-
-            Set<String> uniqueCinemas = new HashSet<>();
-
-            ObservableList<String> items = FXCollections.observableArrayList();
-            ObservableList<String> items2 = FXCollections.observableArrayList();
+            rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + name + "' GROUP BY cinema.name");
 
             while (rs.next()) {
                 String cinema = rs.getString("cinema.name");
-                if (!uniqueCinemas.contains(cinema)) {
-                    uniqueCinemas.add(cinema);
-                    String date = rs.getString("Date");
-                    items.add(cinema);
-                    items2.add(date);
-                    bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account, rs.getString("Resume"));
-                }
+                items.add(cinema);
             }
 
-            MovieContainer.add(bookPane, 0, 1);
             con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
+            stat = con.createStatement();
+            rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie WHERE movie.Name='" + name + "'");
+
+            while (rs.next()) {
+                String date = rs.getString("Date");
+                items2.add(date);
+                bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account, rs.getString("Resume"));
+            }
+
+            MovieContainer.add(bookPane, 0, 1);
+
+        }catch (Exception e1)
+        {
+            System.out.println(e1.getMessage());
         }
     }
 
