@@ -152,7 +152,7 @@ public class BookController {
     private int account;
     private final int[] tab = new int[30];
 
-    public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account, String synopsys) throws SQLException {
+    public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account, String synopsys){
         this.account=account;
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
