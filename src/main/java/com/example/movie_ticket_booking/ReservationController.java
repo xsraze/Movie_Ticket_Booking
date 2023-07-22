@@ -42,6 +42,7 @@ public class ReservationController {
 
     public void setResa(String movie, String realisator, String year, String cinema, String date, String tickets, String card, String room, String price, String poster)
     {
+        //sets every good information for the reservation
         txtTitle.setText(movie);
         txtRealisator.setText(realisator);
         txtYear.setText(year);

@@ -80,8 +80,9 @@ public class HomeController {
 
 
     public void Initialisation(int acc){
+        //function to initialize the home page
         account=acc;
-
+        //disabling the combo boxes of the quick book
         combo_venue.setDisable(true);
         combo_date.setDisable(true);
         combo_seat.setDisable(true);
@@ -94,14 +95,15 @@ public class HomeController {
             ResultSet rs = stat.executeQuery("SELECT * FROM movie");
 
             while (rs.next()) {
-                    String movie_name = rs.getString("Name");
-                    movie.add(movie_name);
+                //adding the movies on the home page
+                String movie_name = rs.getString("Name");
+                movie.add(movie_name);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        //adding movies to the combo box
         combo_movie.setItems(movie);
 
         int col = 0;
@@ -119,7 +121,7 @@ public class HomeController {
                 VBox movieBox = fxmlLoader.load();
                 MovieController mc = fxmlLoader.getController();
                 mc.SetMovie(rs.getString("poster"), rs.getString("Genre"), rs.getString("Name"), rs.getString("Year"), account, rs.getString("Review"));
-
+                //for the display of the movies : only 3 per line
                 if(col == 3)
                 {
                     col =0;
@@ -133,7 +135,7 @@ public class HomeController {
         } catch (Exception e1) {
             System.out.println(e1.getMessage());
         }
-
+        //if someone is connected
         if (account != 0) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -147,7 +149,7 @@ public class HomeController {
                     if(Integer.parseInt(rs.getString("ID_user")) == account)
                     {
                         signin_btn.setText("Hello "+rs.getString("username")+"!");
-
+                        //if the person connected is an admin, displays all the option
                         if(rs.getString("Type").equals("admin"))
                         {
                             txtadmin.setText("Admin");
@@ -232,6 +234,7 @@ public class HomeController {
     }
 
     public void Initialisation2(String name) throws IOException {
+        //initialization of the booking page from the home page
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -255,6 +258,7 @@ public class HomeController {
             rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie JOIN cinema on session.Id_cinema=cinema.Id_cinema WHERE movie.Name='" + name + "' GROUP BY cinema.name");
 
             while (rs.next()) {
+                //getting the cinema names and adding to the combo box
                 String cinema = rs.getString("cinema.name");
                 items.add(cinema);
             }
@@ -270,6 +274,7 @@ public class HomeController {
             rs = stat.executeQuery("SELECT * FROM movie JOIN session ON movie.ID_movie=session.ID_movie WHERE movie.Name='" + name + "'");
 
             while (rs.next()) {
+                //getting the dates and adding them to the combo box
                 String date = rs.getString("Date");
                 items2.add(date);
                 bc.setBook(rs.getString("poster"), rs.getString("Name"), items, items2, account, rs.getString("Resume"));
@@ -284,10 +289,11 @@ public class HomeController {
     }
 
     public void payment(int id_session, String id_movie, int cpt, int[] tab) {
+        //initialization of the payment page
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
-
+        //if the person is not connected
         if (account == 0) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -301,6 +307,7 @@ public class HomeController {
                 MovieContainer.add(paymentPane, 0, 1);
 
                 while (rs2.next()) {
+                    //setting the price, the discount and the id room
                     price_tick = rs2.getInt("Price");
                     discount = rs2.getInt("Discount");
                     id_room = rs2.getInt("ID_room");
@@ -312,6 +319,7 @@ public class HomeController {
                 System.out.println(e.getMessage());
             }
         }
+        //if the person is connected
         if (account != 0) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -319,6 +327,7 @@ public class HomeController {
                 ResultSet rs2 = stat.executeQuery("SELECT * FROM session JOIN movie ON session.ID_movie = movie.ID_movie WHERE session.ID_session = " + id_session + " AND session.ID_movie=" + id_movie + "");
 
                 while (rs2.next()) {
+                    //setting the price, discount, poster, name and id room
                     price_tick = rs2.getInt("Price");
                     discount = rs2.getInt("Discount");
                     poster = rs2.getString("poster");
@@ -340,9 +349,11 @@ public class HomeController {
                 AnchorPane paymentPane = fxmlLoader.load();
 
                 while (rs.next()) {
+                    //verification with the email of the person connected
                     email = rs.getString("email");
                 }
                 PaymentController pc = fxmlLoader.getController();
+                //setting with all the information
                 pc.setPayment(email,"",poster,name,cpt,price_tick,discount,id_session,tab,id_room);
                 MovieContainer.add(paymentPane, 0, 1);
                 con.close();
@@ -357,6 +368,7 @@ public class HomeController {
 
     @FXML
     void Home(MouseEvent event) throws IOException {
+        //button top left that sends to home page
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
         Parent root = fxmlLoader.load();
         Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
@@ -369,6 +381,8 @@ public class HomeController {
 
     @FXML
     void Name() {
+        //sorting the movies by their names
+        //setting the combo boxes for the quick book
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -385,6 +399,7 @@ public class HomeController {
 
             while (rs.next())
             {
+                //displaying all the movies as before but sorted by name
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("MovieHome.fxml"));
                 VBox movieBox = fxmlLoader.load();
@@ -410,6 +425,7 @@ public class HomeController {
 
     @FXML
     void Year() {
+        //sorting the movies by year the same way as before
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -450,6 +466,7 @@ public class HomeController {
 
     @FXML
     void Genre() {
+        //sorting the movies by their genre, the same way as before
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -490,7 +507,7 @@ public class HomeController {
 
     @FXML
     void Login(MouseEvent event) throws IOException {
-
+        //login button on top right that sends to the login page if the person is not connected and sends to the home page if not
         if(login_btn.getText().equals("Log in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -514,6 +531,7 @@ public class HomeController {
 
     @FXML
     void Signin() throws IOException {
+        //button sign in that permits the person to register
         if(signin_btn.getText().equals("Sign in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -525,6 +543,7 @@ public class HomeController {
 
     @FXML
     void profile() throws IOException {
+        //if the person isn't logged in, sends to the login page, if not, the person can see her profile
         if(login_btn.getText().equals("Log in"))
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -543,9 +562,10 @@ public class HomeController {
             bpane.setCenter(info);
         }
     }
-
+    //functions for the admin connected
     @FXML
     void DiscountOffers() {
+        //button discount offers that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -577,7 +597,7 @@ public class HomeController {
 
     @FXML
     void MovieAnalyzed() throws IOException {
-
+        //button movie analyzed that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -593,6 +613,7 @@ public class HomeController {
 
     @FXML
     void SalesCinema() {
+        //button sales cinema that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -651,6 +672,7 @@ public class HomeController {
 
     @FXML
     void SalesMovie() {
+        //button sales movie that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -710,6 +732,7 @@ public class HomeController {
 
     @FXML
     void SalesSession() {
+        //button sales session that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -770,7 +793,7 @@ public class HomeController {
 
     @FXML
     void UpdateMovie() {
-
+        //button update movie that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -803,7 +826,7 @@ public class HomeController {
 
     @FXML
     void UpdateProfiles() {
-
+        //button update profiles that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -836,7 +859,7 @@ public class HomeController {
 
     @FXML
     void UpdateSession() {
-
+        //button update session that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -870,7 +893,7 @@ public class HomeController {
 
     @FXML
     void AddSession() throws IOException {
-
+        //button add session that sends to the right page with the good information
         MovieContainer.getChildren().clear();
         MovieContainer.getColumnConstraints().clear();
         MovieContainer.getRowConstraints().clear();
@@ -934,6 +957,7 @@ public class HomeController {
     @FXML
     public void search()
     {
+        //search bar configuration
         if(searchbar.getText().length()!=0)
         {
             MovieContainer.getChildren().clear();
@@ -951,6 +975,7 @@ public class HomeController {
 
                 while (rs.next())
                 {
+                    //every possibility of searching
                     if(rs.getString("Name").contains(searchbar.getText()) || rs.getString("Genre").contains(searchbar.getText()) || rs.getString("Year").contains(searchbar.getText()) || rs.getString("Author").contains(searchbar.getText()))
                     {
                         find = true;
@@ -977,6 +1002,7 @@ public class HomeController {
 
             if(!find)
             {
+                //in the case that nothing was found
                 searchbar.clear();
                 searchbar.setPromptText("Nothing was found...");
 
@@ -1013,6 +1039,7 @@ public class HomeController {
 
     @FXML
     public void setVenue(){
+        //setting the cinema combo box for the quick book and disabling it after, so we cant change it
         ObservableList<String> updatedItems = FXCollections.observableArrayList();
         if (!combo_movie.isDisable()) {
             combo_venue.setDisable(false);
@@ -1038,6 +1065,7 @@ public class HomeController {
 
     @FXML
     public void setDate(){
+        //setting the date combo box for the quick book and disabling it after, so we cant change it
         ObservableList<String> updatedItems = FXCollections.observableArrayList();
         if (!combo_venue.isDisable()) {
             combo_date.setDisable(false);
@@ -1063,6 +1091,7 @@ public class HomeController {
 
     @FXML
     public void setSeat(){
+        //setting the seats combo box for the quick book and disabling it after, so we cant change it
         ObservableList<String> updatedItems = FXCollections.observableArrayList();
         if (!combo_date.isDisable()) {
             combo_seat.setDisable(false);
@@ -1090,12 +1119,14 @@ public class HomeController {
 
     @FXML
     public void setBook(){
+        //disabling the seat combo box
         combo_seat.setDisable(true);
     }
 
     @FXML
     public void Reset()
     {
+        //reset button in case of an error that clears everything
         combo_seat.getItems().clear();
         combo_movie.getItems().clear();
         combo_venue.getItems().clear();
@@ -1128,6 +1159,7 @@ public class HomeController {
     @FXML
     public void quickBook()
     {
+        //button quick book that sends to the payment page
         int[] tab = new int[30];
         if(combo_seat.isDisable())
         {

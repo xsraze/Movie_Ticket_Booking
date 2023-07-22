@@ -61,6 +61,7 @@ public class UpdateSessionController {
 
     public void setSession(String movie, String cinema, String ID_room, String Discount, String Price, String Date, int account, int session)
     {
+        //setting every good information to set the session we want
         this.account = account;
         this.id_session=session;
         ObservableList<String> Movie = FXCollections.observableArrayList();
@@ -122,7 +123,7 @@ public class UpdateSessionController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        //
         comboMovie.setItems(Movie);
         comboVenue.setItems(Cinema);
         comboRoom.setItems(room);
@@ -179,6 +180,7 @@ public class UpdateSessionController {
                         updatedItems.add(cinema);
                     }
                 }
+
                 comboVenue.setItems(updatedItems);
                 comboRoom.setDisable(true);
                 con.close();
@@ -192,7 +194,7 @@ public class UpdateSessionController {
     @FXML
     void AddAgain(ActionEvent event) {
         boolean error=false;
-
+        //shows errors if ther is some
         ErrDate.setText("");
         ErrMovie.setText("");
         ErrDiscount.setText("");
@@ -202,21 +204,25 @@ public class UpdateSessionController {
 
         if(txtDate.getText().length()==0)
         {
+            //error message for the date
             ErrDate.setText("Put a Date");
             error=true;
         }
         if(txtPrice.getText().length()==0)
         {
-            ErrPrice.setText("Put a Date");
+            //error message for the price
+            ErrPrice.setText("Put a Price");
             error=true;
         }
         if(txtDiscount.getText().length()==0)
         {
+            //error message for the discount
             ErrDiscount.setText("Put a Discount");
             error=true;
         }
         if(!comboMovie.isDisable())
         {
+            //error message for the movie
             ErrMovie.setText("Put a Movie");
             error=true;
         }
@@ -227,6 +233,7 @@ public class UpdateSessionController {
         }
         if(!comboRoom.isDisable())
         {
+            //error message for the room
             ErrRoom.setText("Put a Room");
             error=true;
         }
@@ -279,13 +286,14 @@ public class UpdateSessionController {
                 {
                     if(txtDate.getText().equals(rs.getString("Date")) && id_venue == rs.getInt("id_cinema") && comboRoom.getSelectionModel().getSelectedItem().equals(rs.getString("ID_room")))
                     {
+                        //shows message if the session already exists
                         ErrDate.setText("This Session already exists");
                         ErrVenue.setText("This Session already exists");
                         ErrRoom.setText("This Session already exists");
                         verified=true;
                     }
                 }
-
+                //if everything is good we add it to the database
                 if(!verified)
                 {
                     request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
@@ -312,7 +320,7 @@ public class UpdateSessionController {
     @FXML
     public void DeleteSession(ActionEvent event) throws IOException {
         String request;
-
+        //delete session button that search a session by its id
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
             Statement stat = con.createStatement();
@@ -323,7 +331,7 @@ public class UpdateSessionController {
         catch (Exception e1) {
             System.out.println(e1.getMessage());
         }
-
+        //sends to the home page
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
         Parent root = fxmlLoader.load();
         Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();

@@ -32,19 +32,21 @@ public class MovieController {
     private int account;
 
     public void SetMovie(String post, String Gen, String Nam, String Yea, int acc, String review) throws SQLException {
+        //function that sets a movie with every information needed
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
-
+        //modifies the color of a movie
         ColorAdjust colorAdjust = new ColorAdjust();
         poster.setEffect(colorAdjust);
-
+        //displaying the information under the movie
         this.account=acc;
         poster.setImage(new Image(post));
         Name.setText(Nam);
         Genre.setText(Gen);
         Year.setText(Yea + "  |  "+ "Review: " + review + " ⭐");
-
+        //modifying the brightness of the poster when the mouse is on it
         poster.setOnMouseEntered(mouseEvent -> colorAdjust.setBrightness(BRIGHTNESS_DELTA));
         poster.setOnMouseExited(event -> colorAdjust.setBrightness(0));
+        //action when we click on a movie
         poster.setOnMouseClicked(event -> {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
             Parent root;
@@ -72,9 +74,10 @@ public class MovieController {
                 ResultSet rs = preparedStatement.executeQuery();
 
                 if (rs.next()) {
+                    //searching the movie by its id
                     Id_movie_on_click = rs.getInt("Id_movie");
                 } else {
-                    System.out.println("Film non trouvé.");
+                    System.out.println("Movie not found.");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

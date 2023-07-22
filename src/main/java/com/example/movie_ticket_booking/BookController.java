@@ -153,6 +153,7 @@ public class BookController {
     private final int[] tab = new int[30];
 
     public void setBook(String post, String nom, ObservableList<String> items, ObservableList<String> items2, int account, String synopsys){
+        //setting every information needed for the book page
         this.account=account;
         film_img.setImage(new Image(post));
         film_titre.setText(nom);
@@ -163,10 +164,12 @@ public class BookController {
 
 
     public void lock_cinema() {
+        //disable of the cinema combo box
         venue_cb.setDisable(true);
     }
 
     public void combo_cinema() {
+        //adding the items on the combo box
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
         ObservableList<String> updatedItems2 = FXCollections.observableArrayList();
         int price=0;
@@ -183,6 +186,7 @@ public class BookController {
                         updatedItems2.add(date);
                     }
                 }
+                //setting the combo box
                 date_hour.setItems(updatedItems2);
                 lock_cinema();
                 stat2.close();
@@ -192,12 +196,14 @@ public class BookController {
             }
         }
         if (date_hour.isDisable() && venue_cb.isDisable()) {
+            //adding the price and setting the seats if both combo boxes are selected
             txtPrice.setText("Price: £"+price);
             setSeatButtons();
         }
     }
 
     public void lock_date() {
+        //disabling the combo box
         date_hour.setDisable(true);
     }
 
@@ -219,7 +225,7 @@ public class BookController {
                         uniqueCinemas.add(cinema);
                     }
                 }
-
+                //setting the cinema combo box
                 venue_cb.setItems(FXCollections.observableArrayList(uniqueCinemas));
                 lock_date();
 
@@ -231,6 +237,7 @@ public class BookController {
         }
 
         if (date_hour.isDisable() && venue_cb.isDisable()) {
+            //adding the price and setting the seats if both combo boxes are selected
             txtPrice.setText("Price: £"+price);
             setSeatButtons();
         }
@@ -238,6 +245,7 @@ public class BookController {
 
 
     public void setSeatButtons() {
+        //function that sets every seat of the cinema depending on the date and the cinema selected
         if (date_hour.isDisable() && venue_cb.isDisable()) {
             try {
                 String selectedDate = date_hour.getSelectionModel().getSelectedItem();
@@ -276,6 +284,7 @@ public class BookController {
 
     @FXML
     public void seats(ActionEvent event) {
+        //action when we click on a seat : disabling the button and counting the number of tickets
         String selectedDate = date_hour.getSelectionModel().getSelectedItem();
         String selectedCinema = venue_cb.getSelectionModel().getSelectedItem();
 
@@ -309,6 +318,7 @@ public class BookController {
 
     @FXML
     void book_now(ActionEvent event) throws IOException, SQLException {
+        //button book now sending to another page
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
         Parent root = fxmlLoader.load();
         Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();

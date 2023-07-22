@@ -48,8 +48,8 @@ public class UserController {
 
     @FXML
     void DeleteProfile(ActionEvent event) throws IOException {
+        //Button to delete a User by its id
         String request;
-
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
             Statement stat = con.createStatement();
@@ -60,7 +60,7 @@ public class UserController {
         catch (Exception e1) {
             System.out.println(e1.getMessage());
         }
-
+        //sends to the home page
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
         Parent root = fxmlLoader.load();
         Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
@@ -75,30 +75,37 @@ public class UserController {
 
     @FXML
     void UpdateProfile(ActionEvent event) {
+        //modifying the information of a profile
         boolean error= txtEmail.getText().length() == 0;
 
         if(txtName.getText().length()==0)
         {
+            //check the name
             error=true;
         }
         if(txtLastName.getText().length()==0)
         {
+            //check the last name
             error=true;
         }
         if(txtPassword.getText().length()==0)
         {
+            //check the password
             error=true;
         }
         if(txtUsername.getText().length()==0)
         {
+            //check the username
             error=true;
         }
         if(txtPhone.getText().length()==0)
         {
+            //check the phone number
             error=true;
         }
         if(!radAdmin.isSelected() && !RadCustomer.isSelected())
         {
+            //check if it's an admin or a customer
             error=true;
         }
 
@@ -117,18 +124,21 @@ public class UserController {
                 {
                     if(txtEmail.getText().equals(rs.getString("email")) && ID!=rs.getInt("ID_user"))
                     {
+                        //check the email
                         verified=true;
                     }
                     if(txtUsername.getText().equals(rs.getString("username")) && ID != rs.getInt("ID_user"))
                     {
+                        //check the username
                          verified=true;
                     }
                     if(txtPhone.getText().equals(rs.getString("phone"))  && ID != rs.getInt("ID_user"))
                     {
+                        //check the phonenumber
                         verified=true;
                     }
                 }
-
+                //if everything is good, updates the database
                 if(!verified)
                 {
                     if(radAdmin.isSelected())
@@ -139,7 +149,7 @@ public class UserController {
                         request ="UPDATE `users` SET `Name`='"+txtName.getText()+"',`LastName`='"+txtLastName.getText()+"',`email`='"+txtEmail.getText()+"',`phone`='"+txtPhone.getText()+"',`username`='"+txtUsername.getText()+"',`password`='"+txtPassword.getText()+"',`Type`='customer' WHERE ID_user = '"+ID+"'";
 
                     stat.executeUpdate(request);
-
+                    //sends to the homepage
                     FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));
                     Parent root = fxmlLoader.load();
                     Stage lstage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
@@ -159,6 +169,7 @@ public class UserController {
 
     public void setUser(String name, String LastName, String email, String phone, String username, String password, String type, int id, int id_admin)
     {
+        //sets the information for the user
         ID_admin=id_admin;
         ID=id;
         txtName.setText(name);

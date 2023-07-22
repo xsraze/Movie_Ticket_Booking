@@ -45,12 +45,15 @@ public class SalesDiscountController {
 
     @FXML
     void submit(ActionEvent event) {
+        //action for the submit button for the modification of the discount
         String request;
 
         if(Integer.parseInt(txtdiscount.getText())<=100 && Integer.parseInt(txtdiscount.getText())>=0)
+        //checking if the number is between 0 and 100
         {
             txtError.setText("");
             try{
+                //updating on the database
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
 
@@ -80,6 +83,7 @@ public class SalesDiscountController {
     }
 
     public void setDiscountInfo(String name, String cinema, String date, String room, String poster, String discount, int ID, int account){
+        //sets the good information for the discount sales
         txtMovie.setText(name);
         txtDate.setText(date);
         txtVenue.setText(cinema);

@@ -28,6 +28,7 @@ public class SalesSessionController {
     private Label txtVenue;
 
     public void SetSaleSession(String movie, String cinema, String date, String room, int place, int income, String poster){
+        //setting every good information for the sales for movies
         txtDate.setText(date);
         txtMovie.setText(movie);
         txtVenue.setText(cinema);

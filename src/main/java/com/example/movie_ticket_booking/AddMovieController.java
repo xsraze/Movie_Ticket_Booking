@@ -68,6 +68,7 @@ public class AddMovieController {
 
     @FXML
     void Add(ActionEvent event) {
+        //Verification of the right adding of a movie, with the right error message on the FXML
         boolean error=false;
 
         ErrYear.setText("");
@@ -80,45 +81,53 @@ public class AddMovieController {
 
         if(txtYear.getText().length()==0)
         {
+            //error message for the year
             ErrYear.setText("Put an Year");
             error=true;
         }
         if(txtName.getText().length()==0)
         {
+            //error message for the name
             ErrName.setText("Put a Name");
             error=true;
         }
         if(txtGenre.getText().length()==0)
         {
+            //error message for the genre
             ErrGenre.setText("Put a Genre");
             error=true;
         }
         if(txtPoster.getText().length()==0)
         {
+            //error message for the link of the poster
             ErrPoster.setText("Put a link to a poster");
             error=true;
         }
         if(txtResume.getText().length()==0)
         {
+            //error message for the resume
             ErrResume.setText("Put a Resume");
             error=true;
         }
         if(txtRealisator.getText().length()==0)
         {
+            //error message for the realisator
             ErrRealisator.setText("Put a Realisator");
             error=true;
         }
         if(txtReview.getText().length()==0)
         {
+            //error message for the review
             ErrReview.setText("Put a Review");
             error=true;
         }
         if(Integer.parseInt(txtReview.getText())>5 || Integer.parseInt(txtReview.getText())<0)
         {
+            //error message for the length of the review
             ErrReview.setText("Must be between 0 and 5");
             error=true;
         }
-
+        //other verification if everything doesn't correspond to something existing in the database
         if(!error)
         {
             String request;
@@ -134,21 +143,24 @@ public class AddMovieController {
                 {
                     if(txtName.getText().equals(rs.getString("Name")))
                     {
+                        //error message for the name
                         ErrName.setText("This Name Movie already exists");
                         verified=true;
                     }
                         if(txtPoster.getText().equals(rs.getString("poster")))
                     {
+                        //error message for the poster
                         ErrPoster.setText("This poster is already used");
                         verified=true;
                     }
                     if(txtResume.getText().equals(rs.getString("Resume")))
                     {
+                        //error message for the resume
                         ErrResume.setText("This Resume is already use");
                         verified=true;
                     }
                 }
-
+                //if everything is good, we had the movie
                 if(!verified)
                 {
                     request = "INSERT INTO `movie` (`ID_movie`, `Name`, `poster`, `Resume`, `Genre`, `Author`, `Year`, `Review`) VALUES (NULL, '"+txtName.getText()+"', '"+txtPoster.getText()+"', '"+txtResume.getText()+"', '"+txtGenre.getText()+"', '"+txtRealisator.getText()+"', '"+txtYear.getText()+"', '"+txtReview.getText()+"');";

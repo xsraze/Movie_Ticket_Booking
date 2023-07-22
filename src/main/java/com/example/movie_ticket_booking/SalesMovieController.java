@@ -30,6 +30,7 @@ public class SalesMovieController {
 
     public void setSalesMovie(String name, String Realisator, int year, String genre, int place, int incom, String poster)
     {
+        //setting the sales per movie information
         txtTitle.setText(name);
         txtGenre.setText(genre);
         txtRealisator.setText(Realisator);

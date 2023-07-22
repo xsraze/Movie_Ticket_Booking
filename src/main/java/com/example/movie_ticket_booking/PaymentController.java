@@ -50,7 +50,7 @@ public class PaymentController {
     private boolean verif = false;
 
     public void setPayment(String email2, String cb2, String post, String title, int nb_tick, int price, int disc, int id_session, int[] tab, int id_rooom) {
-
+        //setting the payment page with all good information
         int fp=nb_tick * price;
         email.setText(email2);
         cb.setText(cb2);
@@ -62,7 +62,7 @@ public class PaymentController {
         discount.setText("0" + " %");
         final_p.setText("£ " + fp);
 
-
+        //checking if the person is logged
         if (email.getText() != null) {
             fp = nb_tick * price - nb_tick * price * disc / 100;
             email.setDisable(true);
@@ -77,25 +77,25 @@ public class PaymentController {
 
     @FXML
     void pay(ActionEvent event) {
-        String emailAddress = email.getText();
-        String cardNumber = cb.getText();
+
         int ticketCount = Integer.parseInt(nb_tickets.getText());
         int discountPercentage = Integer.parseInt(discount.getText().substring(0, discount.getText().length() - 2));
         int finalPrice = Integer.parseInt(final_p.getText().substring(2));
         boolean verif_cb=false;
         boolean verif_email=false;
-
-        if (emailAddress.trim().isEmpty() || !isValidEmail(emailAddress)) {
+        //checking if the email is correct
+        if (email.getText()==null || !isValidEmail(email.getText())) {
             showErrorMessage("Please enter a correct adress email.");
             verif_cb=true;
         }
-
-        if (cardNumber.trim().isEmpty() || cardNumber.length() < 16 || cardNumber.length() > 19) {
+        //checking if the card number is correct
+        if ( cb.getText().length() < 16 || cb.getText().length() > 19) {
             showErrorMessage("Please enter a correct card number (between 16 and 19 numbers).");
             verif_email=true;
         }
 
         if (!verif_cb && !verif_email) {
+            //if everything is good, updates the database and sends to the home page
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
@@ -114,7 +114,7 @@ public class PaymentController {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
                 Statement stat = con.createStatement();
 
-                String query = "INSERT INTO reservation (FinalDiscount, FinalPrice, Nb_tickets, ID_session, Email_adress, ID_room, Card_number) VALUES (" + discountPercentage + ", " + finalPrice + ", " + ticketCount + ", " + id_sess + ", '" + emailAddress + "', '" + id_room + "', '" + cardNumber + "')";
+                String query = "INSERT INTO reservation (FinalDiscount, FinalPrice, Nb_tickets, ID_session, Email_adress, ID_room, Card_number) VALUES (" + discountPercentage + ", " + finalPrice + ", " + ticketCount + ", " + id_sess + ", '" + email.getText() + "', '" + id_room + "', '" + cb.getText() + "')";
 
                 stat.executeUpdate(query);
 
@@ -171,6 +171,7 @@ public class PaymentController {
     }
 
     private boolean isValidEmail(String email) {
+        //checking with the database if the email is correct
         if(!verif) {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
@@ -189,10 +190,8 @@ public class PaymentController {
         return true;
     }
 
-
-
-
     private void showErrorMessage(String message) {
+        //function to show an alert message
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);

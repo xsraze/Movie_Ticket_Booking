@@ -68,6 +68,7 @@ public class AddSessionController {
 
     public void SetCombo(ObservableList<String> venue, ObservableList<String> room, ObservableList<String> movie)
     {
+        //setting the items of the combo boxes
         comboRoom.setItems(room);
         comboVenue.setItems(venue);
         comboMovie.setItems(movie);
@@ -75,6 +76,7 @@ public class AddSessionController {
 
     @FXML
     public void setMovie() {
+        //disabling the movie combo box
         comboMovie.setDisable(true);
     }
 
@@ -116,6 +118,7 @@ public class AddSessionController {
                         updatedItems.add(cinema);
                     }
                 }
+                //setting the combo box and disabling the other
                 comboVenue.setItems(updatedItems);
                 comboRoom.setDisable(true);
                 con.close();
@@ -129,6 +132,7 @@ public class AddSessionController {
 
     @FXML
     void AddAgain(ActionEvent event) {
+        //error message for the session added
         boolean error=false;
 
         ErrDate.setText("");
@@ -140,31 +144,37 @@ public class AddSessionController {
 
         if(txtDate.getText().length()==0)
         {
+            //error message for the date
             ErrDate.setText("Put a Date");
             error=true;
         }
         if(txtPrice.getText().length()==0)
         {
-            ErrPrice.setText("Put a Date");
+            //error message for the price
+            ErrPrice.setText("Put a Price");
             error=true;
         }
         if(txtDiscount.getText().length()==0)
         {
+            //error message for the discount
             ErrDiscount.setText("Put a Discount");
             error=true;
         }
         if(!comboMovie.isDisable())
         {
+            //error message for the movie
             ErrMovie.setText("Put a Movie");
             error=true;
         }
         if(!comboVenue.isDisable())
         {
+            //error message for the cinema
             ErrVenue.setText("Put a Venue");
             error=true;
         }
         if(!comboRoom.isDisable())
         {
+            //error message for the room
             ErrRoom.setText("Put a Room");
             error=true;
         }
@@ -180,6 +190,7 @@ public class AddSessionController {
                 while (rs.next())
                 {
                     if(rs.getString("Name").equals(comboMovie.getSelectionModel().getSelectedItem())){
+                        //catching the id movie
                         id_movie=rs.getInt("ID_movie");
                     }
                 }
@@ -196,7 +207,8 @@ public class AddSessionController {
                 while (rs.next())
                 {
                     if(rs.getString("name").equals(comboVenue.getSelectionModel().getSelectedItem())){
-                        id_venue=rs.getInt("Id_cinema");
+                        //catching the id cinema
+                       id_venue=rs.getInt("Id_cinema");
                     }
                 }
 
@@ -217,6 +229,7 @@ public class AddSessionController {
                 {
                     if(txtDate.getText().equals(rs.getString("Date")) && id_venue == rs.getInt("id_cinema") && comboRoom.getSelectionModel().getSelectedItem().equals(rs.getString("ID_room")))
                     {
+                        //error message for the date/cinema/room existing already
                         ErrDate.setText("This Session already exists");
                         ErrVenue.setText("This Session already exists");
                         ErrRoom.setText("This Session already exists");
@@ -226,6 +239,7 @@ public class AddSessionController {
 
                 if(!verified)
                 {
+                    //adding the session if possible
                     request = "INSERT INTO `session` (`ID_session`, `Date`, `ID_movie`, `id_cinema`, `Discount`, `Price`, `ID_room`) VALUES (NULL, '"+txtDate.getText()+"', '"+id_movie+"', '"+id_venue+"', '"+txtDiscount.getText()+"', '"+txtPrice.getText()+"', '"+comboRoom.getSelectionModel().getSelectedItem()+"');";
 
                     stat.executeUpdate(request);
@@ -250,6 +264,7 @@ public class AddSessionController {
 
     @FXML
     void AddExit(ActionEvent event) {
+        //same as before, but instead of staying on the same page, it goes back to the home page
         boolean error=false;
 
         ErrDate.setText("");

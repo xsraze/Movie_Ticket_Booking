@@ -42,8 +42,8 @@ public class MovieUpdateController {
 
     @FXML
     void DeleteMovie(ActionEvent event) throws IOException {
+        //delete movie button by its id
         String request;
-
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
             Statement stat = con.createStatement();
@@ -68,8 +68,9 @@ public class MovieUpdateController {
 
     @FXML
     void UpdateMovie(ActionEvent event) {
+        //modifying a movie and checking if everything is well filled
         boolean error= txtResume.getText().length() == 0;
-
+        //checking every possible error
         if(txtName.getText().length()==0)
         {
             error=true;
@@ -128,6 +129,7 @@ public class MovieUpdateController {
 
                 if(!verified)
                 {
+                    //modifying teh movie if there is no error
                     request ="UPDATE `movie` SET `Name`='"+txtName.getText()+"',`poster`='"+txtPoster.getText()+"',`Resume`='"+txtResume.getText()+"',`Genre`='"+txtGenre.getText()+"',`Author`='"+txtRealisator.getText()+"',`Year`='"+txtYear.getText()+"',`Review`='"+txtReview.getText()+"' WHERE ID_movie = '"+ID+"'";
 
 
@@ -152,6 +154,7 @@ public class MovieUpdateController {
 
     public void setMovie(String name, String Realisator, String poster, int year, String genre, String review, String Resume, int id, int id_admin)
     {
+        //setting the movie with the good information
         ID_admin=id_admin;
         ID=id;
         txtName.setText(name);

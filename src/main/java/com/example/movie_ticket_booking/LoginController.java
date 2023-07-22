@@ -23,6 +23,7 @@ public class LoginController {
 
     @FXML
     void Submit_login(ActionEvent event) {
+        //button to submit the login information
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
@@ -31,8 +32,10 @@ public class LoginController {
 
             while (rs.next())
             {
+                //verification of the username and the password
                 if(Pw_txt.getText().equals(rs.getString("password")) && User_txt.getText().equals(rs.getString("username")))
                 {
+                    //sends to the home page
                     int account = Integer.parseInt(rs.getString("ID_user"));
 
                     FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Home.fxml"));

@@ -17,6 +17,7 @@ public class SalesCinemaController {
 
     public void setSalesMovie(String name,int income, int place)
     {
+        //sets the sales information for a movie
         txtName.setText(name);
         txtPlaces.setText(place + " seats");
         txtIncome.setText("£ " + income);

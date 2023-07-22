@@ -37,6 +37,7 @@ public class InfoController {
     private Label txtWelcome;
 
     public void SetInfo(int account){
+        //information of the person logged in
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
@@ -45,6 +46,7 @@ public class InfoController {
 
             while (rs.next())
             {
+                //every information needed
                 if(account == Integer.parseInt(rs.getString("ID_user")))
                 {
                     txtWelcome.setText("Welcome "+rs.getString("Name")+"!");
@@ -64,6 +66,7 @@ public class InfoController {
         }
 
         try {
+            //every reservation of a user
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_london?useSSL=FALSE", "root", "");
 
             Statement stat = con.createStatement();

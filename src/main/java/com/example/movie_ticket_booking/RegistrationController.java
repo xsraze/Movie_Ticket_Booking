@@ -78,36 +78,43 @@ public class RegistrationController {
 
         if(txtEmail.getText().length()==0)
         {
+            //error message for the email
             ErrEmail.setText("Put an Email");
             error=true;
         }
         if(txtName.getText().length()==0)
         {
+            //error message for the name
             ErrName.setText("Put a Name");
             error=true;
         }
         if(txtLastName.getText().length()==0)
         {
+            //error message for the last name
             ErrLastName.setText("Put a Last Name");
             error=true;
         }
         if(txtPassword.getText().length()==0)
         {
+            //error message for the password
             ErrPassword.setText("Put a Password");
             error=true;
         }
         if(txtUsername.getText().length()==0)
         {
+            //error message for the username
             ErrUsername.setText("Put a Username");
             error=true;
         }
         if(txtPhone.getText().length()==0)
         {
+            //error message for the phone number
             ErrPhone.setText("Put a Phone Number");
             error=true;
         }
         if(!radAdmin.isSelected() && !RadCust.isSelected())
         {
+            //error message for the type of account
             ErrType.setText("Put a Type account");
             error=true;
         }
@@ -127,21 +134,24 @@ public class RegistrationController {
                 {
                     if(txtEmail.getText().equals(rs.getString("email")))
                     {
+                        //if the email already exists
                         ErrEmail.setText("This Email already exists");
                         verified=true;
                     }
                     if(txtUsername.getText().equals(rs.getString("username")))
                     {
+                        //if the username already exists
                         ErrUsername.setText("This Username already exists");
                         verified=true;
                     }
                     if(txtPhone.getText().equals(rs.getString("phone")))
                     {
+                        //if the phone number already exists
                         ErrPhone.setText("This Phone number already exists");
                         verified=true;
                     }
                 }
-
+                //if everything is correct, we can insert in the database
                 if(!verified)
                 {
                     if(radAdmin.isSelected())
@@ -157,6 +167,7 @@ public class RegistrationController {
 
                     while (rs2.next())
                     {
+                        //sends to the home page
                         if(rs2.getString("username").equals(txtUsername.getText()))
                         {
 

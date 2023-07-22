@@ -15,7 +15,7 @@ public class MainApplication extends Application {
         HomeController hc = fxmlLoader.getController();
         hc.Initialisation(0);
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Omnescreen");
         stage.setScene(scene);
         stage.show();
     }
